@@ -35,10 +35,10 @@ export default function About({ data }: Props) {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           <div className="order-2 lg:order-1">
             <AnimatedSection>
-              <span className="text-[var(--teal-600)] text-xs font-bold tracking-widest uppercase">
+              <span className="text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-400)] pb-1">
                 {t('label')}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-3 mb-6 leading-tight">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-5 mb-6 leading-tight">
                 {t('heading')}
               </h2>
             </AnimatedSection>
@@ -53,8 +53,8 @@ export default function About({ data }: Props) {
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <div className="mt-8 p-6 bg-[var(--teal-50)] rounded-xl border border-[var(--teal-100)]">
-                <p className="text-xs font-bold tracking-widest uppercase text-[var(--teal-700)] mb-2">
+              <div className="mt-8 p-6 bg-[var(--cream)] rounded-xl border-l-4 border-[var(--teal-700)]">
+                <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--teal-700)] mb-2">
                   {t('mission_label')}
                 </p>
                 <p className="text-[var(--text-primary)] font-medium leading-relaxed">
@@ -64,12 +64,12 @@ export default function About({ data }: Props) {
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
-              <div className="flex flex-wrap gap-3 mt-8">
+              <div className="flex flex-wrap gap-2 mt-8">
                 {['IT-Recruiting', 'Direktvermittlung', 'Active Sourcing', 'Oberösterreich'].map(
                   (tag) => (
                     <span
                       key={tag}
-                      className="text-xs font-semibold text-[var(--teal-700)] bg-[var(--teal-50)] border border-[var(--teal-100)] px-3 py-1.5 rounded-full"
+                      className="text-xs font-semibold text-[var(--teal-700)] bg-[var(--bg-alt)] border border-[var(--border)] px-3 py-1.5 rounded-full"
                     >
                       {tag}
                     </span>
@@ -82,7 +82,12 @@ export default function About({ data }: Props) {
           <div className="order-1 lg:order-2">
             <AnimatedSection delay={0.1}>
               <div className="relative">
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-xl">
+                {/* Offset background block for depth — no arbitrary blobs */}
+                <div
+                  className="absolute -right-4 -bottom-4 w-full h-full rounded-2xl bg-[var(--teal-800)] opacity-[0.08]"
+                  aria-hidden="true"
+                />
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg shadow-black/10">
                   {data.foto_ueber_uns ? (
                     <Image
                       src={data.foto_ueber_uns}
@@ -91,24 +96,14 @@ export default function About({ data }: Props) {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[var(--teal-50)] to-[var(--teal-100)] flex items-center justify-center">
-                      <div className="text-center text-[var(--teal-600)]">
-                        <svg className="w-20 h-20 mx-auto mb-3 opacity-40" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                        </svg>
-                        <p className="text-sm opacity-60">Foto folgt</p>
+                    <div className="w-full h-full bg-[var(--stone-100)] flex items-center justify-center">
+                      <div className="text-center">
+                        <span className="font-display text-6xl font-bold text-[var(--teal-800)]/20">EE</span>
+                        <p className="text-xs text-[var(--text-muted)] mt-3 tracking-widest uppercase">Foto folgt</p>
                       </div>
                     </div>
                   )}
                 </div>
-                <div
-                  className="absolute -bottom-4 -left-4 w-32 h-32 rounded-2xl bg-[var(--teal-800)] opacity-10"
-                  aria-hidden="true"
-                />
-                <div
-                  className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-[var(--teal-400)] opacity-15"
-                  aria-hidden="true"
-                />
               </div>
             </AnimatedSection>
           </div>

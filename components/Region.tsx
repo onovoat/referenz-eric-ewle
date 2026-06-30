@@ -29,7 +29,7 @@ export default function Region() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div ref={ref}>
             <motion.span
-              className="text-[var(--teal-400)] text-xs font-bold tracking-widest uppercase"
+              className="text-[var(--teal-400)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-700)] pb-1 inline-block"
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5 }}
@@ -37,7 +37,7 @@ export default function Region() {
               {t('label')}
             </motion.span>
             <motion.h2
-              className="text-3xl sm:text-4xl font-bold text-white mt-3 mb-6 leading-tight"
+              className="font-display text-3xl sm:text-4xl font-bold text-white mt-5 mb-6 leading-tight"
               initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 }}
