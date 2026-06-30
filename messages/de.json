@@ -1,0 +1,112 @@
+{
+  "nav": {
+    "about": "Über mich",
+    "services": "Leistungen",
+    "region": "Einsatzgebiet",
+    "partners": "Partner",
+    "contact": "Kontakt",
+    "cta": "Kontakt aufnehmen"
+  },
+  "hero": {
+    "headline": "Die richtigen IT-Talente.",
+    "headline2": "Die passenden Unternehmen.",
+    "subline": "Eine Verbindung, die langfristig funktioniert.",
+    "cta": "Jetzt Kontakt aufnehmen",
+    "scroll": "Mehr erfahren"
+  },
+  "about": {
+    "label": "ÜBER MICH",
+    "heading": "Professionelle Personalberatung",
+    "text1": "Mein Name ist Eric Ewle und meine Leidenschaft ist es, Unternehmen und IT-Fachkräfte erfolgreich zusammenzubringen. Durch meine langjährige Erfahrung in der Direktvermittlung von IT-Fachkräften weiß ich, worauf es bei der erfolgreichen Besetzung von IT-Positionen ankommt.",
+    "text2": "Ich unterstütze Unternehmen dabei, spezialisierte IT-Talente zu finden, und begleite IT-Expert*innen dabei, den passenden Job zu finden.",
+    "mission_label": "Meine Mission",
+    "mission": "Sowohl Unternehmen als auch IT-Expert*innen dabei zu helfen, ihre Ziele zu erreichen und eine erfolgreiche Zusammenarbeit zu ermöglichen."
+  },
+  "services": {
+    "label": "LEISTUNGEN",
+    "heading": "Was ich für Sie tue",
+    "items": [
+      {
+        "title": "Personalvermittlung",
+        "description": "Ich biete Personalvermittlungsdienste an, die speziell auf die Bedürfnisse Ihres Unternehmens zugeschnitten sind. Dabei stelle ich sicher, dass IT-Fachkräfte nicht nur fachlich, sondern auch persönlich perfekt zu Ihrem Team passen."
+      },
+      {
+        "title": "Aktive Ansprache",
+        "description": "Durch gezieltes Active Sourcing und die Nutzung meines bestehenden Netzwerks identifiziere und rekrutiere ich proaktiv hochqualifizierte Talente, die möglicherweise nicht aktiv auf Jobsuche sind. So erhalten Sie Zugang zu den besten verfügbaren Fachkräften."
+      },
+      {
+        "title": "Prozessoptimierung",
+        "description": "Ich berate Sie bei der Verbesserung Ihrer Recruiting-Strategien und Prozesse, damit Sie langfristig effizienter die richtigen IT-Fachkräfte finden und binden."
+      }
+    ]
+  },
+  "region": {
+    "label": "EINSATZGEBIET",
+    "heading": "Schwerpunkt Oberösterreich",
+    "text": "Mit Sitz in Wien und Fokus auf Oberösterreich baue ich ein starkes regionales Netzwerk auf — um Unternehmen und IT-Talente in der Region nachhaltig zusammenzubringen.",
+    "badge": "Oberösterreich"
+  },
+  "partners": {
+    "label": "PARTNER",
+    "heading": "Unternehmen, die mir vertrauen",
+    "text": "Ich arbeite eng mit ausgewählten Unternehmen zusammen, um die besten IT-Fachkräfte für deren Teams zu finden."
+  },
+  "contact": {
+    "label": "KONTAKT AUFNEHMEN",
+    "heading": "Lassen Sie uns sprechen.",
+    "subtext": "Schildern Sie mir kurz Ihren Personalbedarf — ich melde mich danach bei Ihnen.",
+    "benefit1_title": "Kostenloses Kennenlerngespräch",
+    "benefit1_text": "Unverbindlich und ohne Verpflichtung — ich höre zuerst zu.",
+    "benefit2_title": "DSGVO-konform",
+    "benefit2_text": "Ihre Daten behandle ich vertraulich und gesetzeskonform.",
+    "form": {
+      "firstname": "Vorname",
+      "lastname": "Nachname",
+      "company": "Unternehmen",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "need": "Personalbedarf / Bereich",
+      "need_placeholder": "z. B. Software-Entwicklung, IT-Infrastruktur, Data Engineering",
+      "message": "Nachricht",
+      "message_placeholder": "Beschreiben Sie kurz, welche Positionen Sie besetzen möchten.",
+      "attachment": "Anhang (optional, PDF)",
+      "gdpr": "Ich stimme der Verarbeitung meiner Daten gemäß Datenschutzerklärung zu.",
+      "submit": "Anfrage absenden",
+      "sending": "Wird gesendet...",
+      "success": "Vielen Dank! Ich melde mich in Kürze bei Ihnen.",
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    }
+  },
+  "footer": {
+    "tagline": "Personalberatung mit Leidenschaft.",
+    "links": {
+      "impressum": "Impressum",
+      "datenschutz": "Datenschutz",
+      "agb": "AGB",
+      "cookie": "Cookie-Einstellungen"
+    },
+    "credit": "Website by onovo.at",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "legal": {
+    "placeholder": "Dies ist ein Platzhalter-Dokument für Demo-Zwecke. Die rechtsverbindlichen Inhalte werden vor der Live-Schaltung dieser Website final eingefügt.",
+    "impressum_title": "Impressum",
+    "datenschutz_title": "Datenschutzerklärung",
+    "agb_title": "Allgemeine Geschäftsbedingungen",
+    "back": "Zurück zur Startseite"
+  },
+  "cookie": {
+    "text": "Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten.",
+    "privacy_link": "Datenschutzerklärung",
+    "accept_all": "Alle akzeptieren",
+    "accept_necessary": "Nur notwendige",
+    "settings": "Einstellungen",
+    "save": "Einstellungen speichern",
+    "necessary_title": "Notwendige Cookies",
+    "necessary_text": "Diese Cookies sind für die Funktion der Website erforderlich und können nicht deaktiviert werden.",
+    "stats_title": "Statistik-Cookies",
+    "stats_text": "Diese Cookies helfen uns zu verstehen, wie Besucher die Website nutzen.",
+    "marketing_title": "Marketing-Cookies",
+    "marketing_text": "Diese Cookies ermöglichen personalisierte Werbung."
+  }
+}
