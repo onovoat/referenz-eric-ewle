@@ -20,7 +20,6 @@ export default function Header({ locale }: Props) {
   }, []);
 
   const otherLocale = locale === 'de' ? 'en' : 'de';
-  const otherFlag = locale === 'de' ? '🇬🇧' : '🇦🇹';
   const otherLabel = locale === 'de' ? 'EN' : 'DE';
 
   const navLinks = [
@@ -39,11 +38,12 @@ export default function Header({ locale }: Props) {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <a href="#" className="flex items-center gap-2 group" aria-label="Eric Ewle – zur Startseite">
-            <span className="text-lg font-bold text-[var(--teal-800)] tracking-tight">
+          <a href="#" className="flex items-center gap-2.5 group" aria-label="Eric Ewle – zur Startseite">
+            <span className="font-display text-xl font-bold text-[var(--teal-800)] tracking-tight leading-none">
               Eric Ewle
             </span>
-            <span className="hidden sm:block text-xs text-[var(--text-secondary)] font-medium">
+            <span className="hidden sm:block h-4 w-px bg-[var(--border)]" aria-hidden="true" />
+            <span className="hidden sm:block text-xs text-[var(--text-muted)] font-medium tracking-wide">
               IT Personalberatung
             </span>
           </a>
@@ -66,7 +66,9 @@ export default function Header({ locale }: Props) {
               className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--teal-700)] transition-colors px-2 py-1 rounded"
               aria-label={`Sprache wechseln zu ${otherLabel}`}
             >
-              <span aria-hidden="true">{otherFlag}</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
               <span>{otherLabel}</span>
             </Link>
             <a
@@ -120,10 +122,12 @@ export default function Header({ locale }: Props) {
             <div className="flex items-center gap-3 mt-3 pt-3 border-t border-[var(--border)]">
               <Link
                 href={`/${otherLocale}`}
-                className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] px-3 py-2 rounded hover:bg-[var(--teal-50)] transition-colors"
+                className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] px-3 py-2 rounded hover:bg-[var(--teal-50)] transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
-                <span aria-hidden="true">{otherFlag}</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
                 <span>{otherLabel}</span>
               </Link>
               <a

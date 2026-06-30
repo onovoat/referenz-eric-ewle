@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* Teal brand palette */
   --teal-900: #072f36;
   --teal-800: #0d4a52;
   --teal-700: #156272;
@@ -9,11 +10,28 @@
   --teal-100: #d0edf2;
   --teal-50: #e8f7fa;
   --dark: #0f1923;
+
+  /* Warm neutral palette */
+  --cream: #fdf8f0;
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f0;
+  --stone-200: #e8e4de;
+
+  /* Text */
   --text-primary: #1a2634;
   --text-secondary: #4b5563;
+  --text-muted: #8b95a1;
+
+  /* Surfaces */
   --bg: #ffffff;
-  --bg-alt: #f8fafb;
-  --border: #e2e8f0;
+  --bg-alt: #f9f7f4;
+  --border: #e2e0db;
+  --border-light: #ede9e3;
+}
+
+/* Display font utility — used on all h1/h2 headings */
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
 }
 
 @media (prefers-reduced-motion: reduce) {
