@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'ericewle.at',
       },
+      {
+        protocol: 'https',
+        hostname: 'cms.onovo.at',
+      },
     ],
   },
 };
