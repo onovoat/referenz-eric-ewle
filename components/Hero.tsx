@@ -101,7 +101,7 @@ export default function Hero({ data }: Props) {
             src={data.foto_hero}
             alt="Eric Ewle – IT Personalberater"
             fill
-            className="object-cover object-[center_15%]"
+            className="object-cover object-[72%_15%]"
             priority
           />
         ) : (
