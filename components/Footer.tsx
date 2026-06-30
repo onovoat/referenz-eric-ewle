@@ -15,11 +15,11 @@ export default function Footer({ locale }: Props) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
           <div>
-            <p className="text-lg font-bold text-white mb-1">Eric Ewle</p>
+            <p className="font-display text-xl font-bold text-white mb-1">Eric Ewle</p>
             <p className="text-sm text-gray-400">{t('tagline')}</p>
           </div>
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-3">Kontakt</p>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-3">Kontakt</p>
             <ul className="flex flex-col gap-2">
               <li>
                 <a href="tel:+436767068736" className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-2">
@@ -49,7 +49,7 @@ export default function Footer({ locale }: Props) {
             </ul>
           </div>
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase text-gray-500 mb-3">Links</p>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-3">Links</p>
             <ul className="flex flex-col gap-2">
               <li>
                 <Link href={`/${locale}/impressum`} className="text-sm text-gray-300 hover:text-white transition-colors">

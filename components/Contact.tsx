@@ -87,8 +87,8 @@ export default function Contact() {
   }
 
   const inputClass =
-    'w-full rounded-lg border border-[var(--border)] bg-white px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--teal-600)] focus:border-transparent transition-colors min-h-[44px]';
-  const labelClass = 'block text-xs font-semibold text-[var(--text-secondary)] mb-1.5';
+    'w-full rounded-lg border border-[var(--border)] bg-[var(--stone-50)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--teal-700)] focus:border-transparent focus:bg-white transition-colors min-h-[44px]';
+  const labelClass = 'block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 tracking-wide';
 
   return (
     <>
@@ -103,7 +103,7 @@ export default function Contact() {
           <div ref={ref} className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
             <div className="lg:col-span-2">
               <motion.span
-                className="text-[var(--teal-600)] text-xs font-bold tracking-widest uppercase"
+                className="text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-400)] pb-1 inline-block"
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5 }}
@@ -111,7 +111,7 @@ export default function Contact() {
                 {t('label')}
               </motion.span>
               <motion.h2
-                className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-3 mb-4 leading-tight"
+                className="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-5 mb-4 leading-tight"
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -159,7 +159,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               {status === 'success' ? (
-                <div className="bg-white rounded-2xl border border-[var(--border)] p-10 text-center shadow-sm">
+                <div className="bg-white rounded-2xl border border-[var(--border)] p-10 text-center shadow-sm shadow-black/5">
                   <div className="w-16 h-16 rounded-full bg-[var(--teal-50)] flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-[var(--teal-700)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -170,7 +170,7 @@ export default function Contact() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-white rounded-2xl border border-[var(--border)] p-6 sm:p-8 shadow-sm"
+                  className="bg-white rounded-2xl border border-[var(--border-light)] p-6 sm:p-8 shadow-sm shadow-black/5"
                   noValidate
                   aria-label="Kontaktformular"
                 >
