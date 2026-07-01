@@ -51,7 +51,7 @@ export default function Hero({ data }: Props) {
           className="max-w-xl"
         >
           <span className="inline-block text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase mb-6 border-b border-[var(--teal-400)] pb-1">
-            IT Personalberatung
+            IT Personalberatung · OÖ · Wien · Salzburg
           </span>
 
           <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-bold text-[var(--text-primary)] leading-[1.15] mb-6">
@@ -95,14 +95,14 @@ export default function Hero({ data }: Props) {
             </div>
             <div>
               <div className="text-2xl font-bold text-[var(--teal-800)]">
-                <TypewriterText text="OÖ" startDelay={1.2} />
+                <TypewriterText text="OÖ · W · S" startDelay={1.2} />
               </div>
               <motion.div
                 className="text-xs text-[var(--text-muted)] mt-1 leading-snug"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 1.5 }}
               >
-                Fokus Region<br />Oberösterreich
+                OÖ · Wien · Salzburg
               </motion.div>
             </div>
             <div>

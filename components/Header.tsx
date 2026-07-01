@@ -62,6 +62,9 @@ export default function Header({ locale }: Props) {
               <span className="hidden sm:block text-[10px] text-[var(--text-muted)] font-normal tracking-wide leading-none mt-0.5">
                 Menschen verbinden. Erfolg gestalten.
               </span>
+              <span className="hidden sm:block text-[9px] text-[var(--teal-700)] font-semibold tracking-[0.14em] uppercase leading-none mt-1">
+                OÖ · Wien · Salzburg
+              </span>
             </div>
           </a>
 
