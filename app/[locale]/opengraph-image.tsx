@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'edge';
+// nodejs runtime — edge runtime requires Vercel infrastructure, not compatible with self-hosted Coolify
 export const alt = 'Eric Ewle – IT Personalberatung';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -16,11 +16,17 @@ const PHOTO_URL =
   'https://cms.onovo.at/assets/8448c2a3-41e0-4b25-9e54-2d28bcd9a79d';
 
 export default async function Image() {
-  // Load Inter from Bunny Fonts (privacy-friendly Google Fonts mirror)
-  const [fontRegular, fontBold] = await Promise.all([
-    fetch('https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff2').then(r => r.arrayBuffer()),
-    fetch('https://fonts.bunny.net/inter/files/inter-latin-700-normal.woff2').then(r => r.arrayBuffer()),
-  ]);
+  // Load Inter — fallback gracefully if network unavailable
+  let fontRegular: ArrayBuffer | null = null;
+  let fontBold: ArrayBuffer | null = null;
+  try {
+    [fontRegular, fontBold] = await Promise.all([
+      fetch('https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff2').then(r => r.arrayBuffer()),
+      fetch('https://fonts.bunny.net/inter/files/inter-latin-700-normal.woff2').then(r => r.arrayBuffer()),
+    ]);
+  } catch {
+    // renders with system sans-serif if fonts can't be fetched
+  }
 
   return new ImageResponse(
     (
@@ -207,8 +213,8 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: 'Inter', data: fontRegular, weight: 400, style: 'normal' },
-        { name: 'Inter', data: fontBold,    weight: 700, style: 'normal' },
+        ...(fontRegular ? [{ name: 'Inter', data: fontRegular, weight: 400 as const, style: 'normal' as const }] : []),
+        ...(fontBold    ? [{ name: 'Inter', data: fontBold,    weight: 700 as const, style: 'normal' as const }] : []),
       ],
     }
   );
