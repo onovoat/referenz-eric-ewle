@@ -39,6 +39,10 @@ export async function generateMetadata({
       ? ['IT Personalberatung', 'IT Recruiting', 'Personalvermittlung Oberösterreich', 'Active Sourcing', 'Eric Ewle']
       : ['IT Recruitment', 'IT Staffing', 'Recruitment Consulting Upper Austria', 'Active Sourcing', 'Eric Ewle'],
     authors: [{ name: 'Eric Ewle' }],
+    icons: {
+      icon: '/favicon.svg',
+      shortcut: '/favicon.svg',
+    },
     openGraph: {
       title: isDe ? 'Eric Ewle – IT Personalberatung' : 'Eric Ewle – IT Recruitment Consulting',
       description: isDe
@@ -46,6 +50,15 @@ export async function generateMetadata({
         : 'Connecting IT professionals and companies successfully.',
       locale: isDe ? 'de_AT' : 'en_US',
       type: 'website',
+      url: 'https://eric-ewle.onovo.at',
+      siteName: 'Eric Ewle',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isDe ? 'Eric Ewle – IT Personalberatung' : 'Eric Ewle – IT Recruitment Consulting',
+      description: isDe
+        ? 'IT-Fachkräfte und Unternehmen erfolgreich zusammenbringen.'
+        : 'Connecting IT professionals and companies successfully.',
     },
   };
 }
