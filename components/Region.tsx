@@ -4,27 +4,13 @@ import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
-/*
-  Base map: /public/austria-karte.png  (400 × 283 px, RGBA transparent, white lines)
-  SVG viewBox matches PNG dimensions exactly.
-  OÖ fill path uses equirectangular projection calibrated to the PNG:
-    x = (lon − 9.53) × 52.4
-    y = (49.02 − lat) × 106.8
-*/
-
-// OÖ geographic boundary (~18 waypoints, irregular Böhmerwald northern edge)
-const OÖ_PATH =
-  'M 184,128 L 184,107 L 192,104 L 201,98 L 209,90 L 215,84' +
-  ' L 223,74 L 229,64 L 236,52 L 244,42 L 253,29 L 262,16 L 270,13' +
-  ' L 277,16 L 284,21 L 284,45 L 284,68 L 284,93 L 284,128' +
-  ' L 275,128 L 259,128 L 244,128 L 233,128 L 220,128 L 208,128 L 195,128 Z';
-
 export default function Region() {
   const t = useTranslations('region');
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  // Linz: lon=14.29, lat=48.31 → (250, 76)
+  // Linz: lon=14.29, lat=48.31 → equirectangular on 400×283
+  // x = (lon−9.53)×52.4  y = (49.02−lat)×106.8
   const LINZ = { cx: 250, cy: 76 };
 
   return (
@@ -76,13 +62,6 @@ export default function Region() {
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            {/*
-              SVG viewBox = 400 × 283 (matches the PNG).
-              Layer order (bottom → top):
-                1. <image>  — the PNG with white Bundesland borders, transparent bg
-                2. OÖ fill  — cream/beige polygon
-                3. Linz dot + label
-            */}
             <svg
               viewBox="0 0 400 283"
               className="w-full"
@@ -92,7 +71,7 @@ export default function Region() {
             >
               <title>Österreich – Schwerpunkt Oberösterreich</title>
 
-              {/* Base map PNG — white lines, transparent background */}
+              {/* PNG: transparent bg, white borders, OÖ already filled #fdf8f0 */}
               <image
                 href="/austria-karte.png"
                 x="0" y="0"
@@ -100,55 +79,33 @@ export default function Region() {
                 aria-hidden="true"
               />
 
-              {/* OÖ fill — drawn below the white map lines */}
-              <path
-                d={OÖ_PATH}
-                fill="#fdf8f0"
-                fillOpacity="0.82"
-                aria-hidden="true"
-              />
-
-              {/* OÖ label inside the filled area */}
-              <text
-                x="234" y="88"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="rgba(20,55,48,0.85)"
-                fontSize="7"
-                fontFamily="Inter, system-ui, sans-serif"
-                fontWeight="600"
-                letterSpacing="0.6"
-                aria-hidden="true"
-              >
-                Oberösterreich
-              </text>
-
               {/* Linz — pulsing city dot */}
               {inView && (
                 <>
                   <motion.circle
                     cx={LINZ.cx} cy={LINZ.cy} r={4} fill="none"
-                    stroke="rgba(30,75,62,0.65)" strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.65 }}
+                    stroke="rgba(255,255,255,0.4)" strokeWidth="1"
+                    initial={{ r: 4, opacity: 0.6 }}
                     animate={{ r: 18, opacity: 0 }}
                     transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1.0 }}
                   />
                   <motion.circle
                     cx={LINZ.cx} cy={LINZ.cy} r={4} fill="none"
-                    stroke="rgba(30,75,62,0.65)" strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.65 }}
+                    stroke="rgba(255,255,255,0.4)" strokeWidth="1"
+                    initial={{ r: 4, opacity: 0.6 }}
                     animate={{ r: 18, opacity: 0 }}
                     transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1.9 }}
                   />
                 </>
               )}
-              <circle cx={LINZ.cx} cy={LINZ.cy} r={4} fill="rgba(25,65,55,0.92)" aria-hidden="true" />
+              <circle cx={LINZ.cx} cy={LINZ.cy} r={4} fill="rgba(255,255,255,0.85)" aria-hidden="true" />
               <text
                 x={LINZ.cx + 6} y={LINZ.cy - 1}
-                fill="rgba(20,55,48,0.9)"
+                fill="rgba(255,255,255,0.7)"
                 fontSize="6"
                 fontFamily="Inter, system-ui, sans-serif"
-                fontWeight="700"
+                fontWeight="600"
+                dominantBaseline="middle"
                 aria-hidden="true"
               >
                 Linz
