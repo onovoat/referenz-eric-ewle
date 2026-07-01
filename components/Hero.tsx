@@ -141,7 +141,7 @@ export default function Hero({ data }: Props) {
         {data.foto_hero ? (
           <Image
             src={data.foto_hero}
-            alt="Eric Ewle – IT Personalberater"
+            alt="Eric Ewle, IT Personalberater"
             fill
             className="object-cover object-[72%_15%]"
             priority
@@ -160,10 +160,10 @@ export default function Hero({ data }: Props) {
           </div>
         )}
 
-        {/* Bottom strip — clean, no glassmorphism */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[var(--teal-900)]/80 px-8 py-5">
-          <p className="text-white font-semibold text-sm">Eric Ewle</p>
-          <p className="text-[var(--teal-100)] text-xs mt-0.5 tracking-wide">IT Personalberater · Wien</p>
+        {/* Bottom name overlay — gradient for elegance */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent pt-20 pb-7 px-8">
+          <p className="text-white font-bold text-base tracking-wide">Eric Ewle</p>
+          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">IT Personalberater · Wien</p>
         </div>
       </motion.div>
     </section>

@@ -30,8 +30,8 @@ export async function generateMetadata({
   const isDe = locale === 'de';
   return {
     title: isDe
-      ? 'Eric Ewle – IT Personalberatung & Recruiting in Oberösterreich'
-      : 'Eric Ewle – IT Recruitment Consulting in Upper Austria',
+      ? 'Eric Ewle | IT Personalberatung & Recruiting in Oberösterreich'
+      : 'Eric Ewle | IT Recruitment Consulting in Upper Austria',
     description: isDe
       ? 'Ich verbinde IT-Fachkräfte und Unternehmen in Oberösterreich. Direktvermittlung, Active Sourcing und Prozessoptimierung von Eric Ewle, Wien.'
       : 'I connect IT professionals and companies in Upper Austria. Direct placement, active sourcing and process optimization by Eric Ewle, Vienna.',
@@ -44,7 +44,7 @@ export async function generateMetadata({
       shortcut: '/favicon.svg',
     },
     openGraph: {
-      title: isDe ? 'Eric Ewle – IT Personalberatung' : 'Eric Ewle – IT Recruitment Consulting',
+      title: isDe ? 'Eric Ewle | IT Personalberatung' : 'Eric Ewle | IT Recruitment Consulting',
       description: isDe
         ? 'IT-Fachkräfte und Unternehmen erfolgreich zusammenbringen.'
         : 'Connecting IT professionals and companies successfully.',
@@ -55,7 +55,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: isDe ? 'Eric Ewle – IT Personalberatung' : 'Eric Ewle – IT Recruitment Consulting',
+      title: isDe ? 'Eric Ewle | IT Personalberatung' : 'Eric Ewle | IT Recruitment Consulting',
       description: isDe
         ? 'IT-Fachkräfte und Unternehmen erfolgreich zusammenbringen.'
         : 'Connecting IT professionals and companies successfully.',

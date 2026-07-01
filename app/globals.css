@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Teal brand palette */
-  --teal-900: #072f36;
-  --teal-800: #0d4a52;
-  --teal-700: #156272;
-  --teal-600: #1e7d92;
-  --teal-400: #4aaec4;
-  --teal-100: #d0edf2;
-  --teal-50: #e8f7fa;
+  /* Navy brand palette */
+  --teal-900: #0d1b2e;
+  --teal-800: #1a2c4e;
+  --teal-700: #243a6b;
+  --teal-600: #2e4d88;
+  --teal-400: #6b8dc8;
+  --teal-100: #d5dff2;
+  --teal-50: #edf0fb;
   --dark: #0f1923;
 
   /* Warm neutral palette */
@@ -54,6 +54,6 @@ body {
 }
 
 *:focus-visible {
-  outline: 2px solid #1e7d92;
+  outline: 2px solid var(--teal-600);
   outline-offset: 2px;
 }

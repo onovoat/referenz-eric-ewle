@@ -84,14 +84,14 @@ export default function About({ data }: Props) {
               <div className="relative">
                 {/* Offset background block for depth — no arbitrary blobs */}
                 <div
-                  className="absolute -right-4 -bottom-4 w-full h-full rounded-2xl bg-[var(--teal-800)] opacity-[0.08]"
+                  className="absolute -right-4 -bottom-4 w-full h-full bg-[var(--teal-800)] opacity-[0.08]"
                   aria-hidden="true"
                 />
-                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-lg shadow-black/10">
+                <div className="relative aspect-[4/5] overflow-hidden shadow-lg shadow-black/10">
                   {data.foto_ueber_uns ? (
                     <Image
                       src={data.foto_ueber_uns}
-                      alt="Eric Ewle – Personalberater"
+                      alt="Eric Ewle, Personalberater"
                       fill
                       className="object-cover"
                     />

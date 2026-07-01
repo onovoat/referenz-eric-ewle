@@ -64,15 +64,15 @@ export default function Partners() {
               href={partner.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative group flex items-center gap-5 bg-[var(--bg-alt)] hover:bg-[var(--teal-50)] border border-[var(--border)] hover:border-[var(--teal-400)] rounded-2xl px-8 py-7 transition-all duration-300 min-w-[220px] focus:outline-none focus:ring-2 focus:ring-[var(--teal-600)] focus:ring-offset-2"
+              className="relative group flex items-center gap-5 bg-[var(--bg-alt)] hover:bg-[var(--teal-50)] border border-[var(--border)] hover:border-[var(--teal-400)] rounded-xl px-8 py-7 transition-all duration-300 min-w-[220px] focus:outline-none focus:ring-2 focus:ring-[var(--teal-600)] focus:ring-offset-2"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              aria-label={`${partner.name} – ${partner.description} (öffnet in neuem Tab)`}
+              aria-label={`${partner.name}: ${partner.description} (öffnet in neuem Tab)`}
             >
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[var(--teal-800)] group-hover:bg-[var(--teal-700)] text-white flex items-center justify-center font-bold text-sm transition-colors duration-300">
+              <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[var(--teal-800)] group-hover:bg-[var(--teal-700)] text-white flex items-center justify-center font-bold text-sm transition-colors duration-300">
                 {partner.initial}
               </div>
               <div>
