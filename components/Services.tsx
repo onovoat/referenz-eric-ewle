@@ -59,7 +59,7 @@ export default function Services() {
             >
               {/* Number + icon row */}
               <div className="flex items-start justify-between mb-6">
-                <span className="font-display text-4xl font-bold text-[var(--teal-800)]/10 leading-none select-none">
+                <span className="font-display text-4xl font-bold text-[var(--teal-700)]/40 leading-none select-none">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="w-10 h-10 rounded-lg bg-[var(--teal-800)] group-hover:bg-[var(--teal-700)] text-white flex items-center justify-center transition-colors duration-300 flex-shrink-0">

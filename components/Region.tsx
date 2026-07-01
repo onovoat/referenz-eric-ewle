@@ -9,10 +9,6 @@ export default function Region() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  // Linz: lon=14.29, lat=48.31 → equirectangular on 400×283
-  // x = (lon−9.53)×52.4  y = (49.02−lat)×106.8
-  const LINZ = { cx: 250, cy: 76 };
-
   return (
     <section id="region" className="py-24 lg:py-32 bg-[var(--dark)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,37 +75,6 @@ export default function Region() {
                 aria-hidden="true"
               />
 
-              {/* Linz — pulsing city dot */}
-              {inView && (
-                <>
-                  <motion.circle
-                    cx={LINZ.cx} cy={LINZ.cy} r={4} fill="none"
-                    stroke="rgba(255,255,255,0.4)" strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.6 }}
-                    animate={{ r: 18, opacity: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1.0 }}
-                  />
-                  <motion.circle
-                    cx={LINZ.cx} cy={LINZ.cy} r={4} fill="none"
-                    stroke="rgba(255,255,255,0.4)" strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.6 }}
-                    animate={{ r: 18, opacity: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1.9 }}
-                  />
-                </>
-              )}
-              <circle cx={LINZ.cx} cy={LINZ.cy} r={4} fill="rgba(255,255,255,0.85)" aria-hidden="true" />
-              <text
-                x={LINZ.cx + 6} y={LINZ.cy - 1}
-                fill="rgba(255,255,255,0.7)"
-                fontSize="6"
-                fontFamily="Inter, system-ui, sans-serif"
-                fontWeight="600"
-                dominantBaseline="middle"
-                aria-hidden="true"
-              >
-                Linz
-              </text>
             </svg>
           </motion.div>
 

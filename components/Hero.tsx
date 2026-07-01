@@ -9,6 +9,24 @@ type Props = {
   data: SiteData;
 };
 
+// Animates a string character by character
+function TypewriterText({ text, startDelay }: { text: string; startDelay: number }) {
+  return (
+    <>
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.01, delay: startDelay + i * 0.07 }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </>
+  );
+}
+
 export default function Hero({ data }: Props) {
   const t = useTranslations('hero');
 
@@ -61,19 +79,43 @@ export default function Hero({ data }: Props) {
             </a>
           </div>
 
-          {/* Stats — editorial row */}
-          <div className="flex items-start gap-8 pt-8 border-t border-[var(--border)]">
+          {/* Stats — full-width spread, typewriter entrance */}
+          <div className="flex items-start justify-between pt-8 border-t border-[var(--border)]">
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">100%</div>
-              <div className="text-xs text-[var(--text-muted)] mt-1 leading-snug">Direktvermittlung<br />ohne Umwege</div>
+              <div className="text-2xl font-bold text-[var(--teal-800)]">
+                <TypewriterText text="100%" startDelay={0.8} />
+              </div>
+              <motion.div
+                className="text-xs text-[var(--text-muted)] mt-1 leading-snug"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 1.2 }}
+              >
+                Direktvermittlung<br />ohne Umwege
+              </motion.div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">OÖ</div>
-              <div className="text-xs text-[var(--text-muted)] mt-1 leading-snug">Fokus Region<br />Oberösterreich</div>
+              <div className="text-2xl font-bold text-[var(--teal-800)]">
+                <TypewriterText text="OÖ" startDelay={1.2} />
+              </div>
+              <motion.div
+                className="text-xs text-[var(--text-muted)] mt-1 leading-snug"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 1.5 }}
+              >
+                Fokus Region<br />Oberösterreich
+              </motion.div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">IT</div>
-              <div className="text-xs text-[var(--text-muted)] mt-1 leading-snug">Ausschließlich<br />IT-Positionen</div>
+              <div className="text-2xl font-bold text-[var(--teal-800)]">
+                <TypewriterText text="IT" startDelay={1.55} />
+              </div>
+              <motion.div
+                className="text-xs text-[var(--text-muted)] mt-1 leading-snug"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 1.8 }}
+              >
+                Ausschließlich<br />IT-Positionen
+              </motion.div>
             </div>
           </div>
         </motion.div>
