@@ -103,7 +103,7 @@ export default function Region() {
               {/* OÖ fill — drawn below the white map lines */}
               <path
                 d={OÖ_PATH}
-                fill="var(--cream)"
+                fill="#fdf8f0"
                 fillOpacity="0.82"
                 aria-hidden="true"
               />
