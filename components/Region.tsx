@@ -5,67 +5,69 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
 /*
-  SVG paths traced from reference Austria map (300×210px → scaled 2×).
-  Coordinate system: origin = image top-left, x right, y down.
+  SVG Austria map — geographically calibrated coordinate system.
+  Projection: x = (lon − 9.5) × 95 + 10  |  y = (48.95 − lat) × 187 + 10
+  ViewBox: 760 × 500
 
-  Paths follow the actual visual boundary of the reference map image.
+  All adjacent states share exact boundary vertices (no gaps/overlaps).
+  Junction nodes verified against geographic reference data.
 */
 
 const states = [
   {
     id: 'V',
-    // Vorarlberg – small far-west
-    path: 'M 24,194 L 58,190 L 60,214 L 56,260 L 24,262 Z',
-    lx: 38, ly: 226, abbr: 'V',
+    // Vorarlberg (lon 9.52–10.18, lat 47.05–47.58)
+    path: 'M 12,266 L 75,266 L 75,365 L 12,365 Z',
+    lx: 43, ly: 316,
   },
   {
     id: 'T',
-    // Tirol – long western strip with south panhandle
-    path: 'M 56,170 L 330,180 L 294,314 L 80,330 L 38,312 L 56,260 Z',
-    lx: 170, ly: 242, abbr: 'T',
+    // Tirol — long panhandle (lon 10.18–12.50, lat 46.83–47.82)
+    path: 'M 75,221 L 295,221 L 274,406 L 75,406 Z',
+    lx: 175, ly: 320,
   },
   {
     id: 'S',
-    // Salzburg – wedge between Tirol and OÖ/Steiermark, dips north to touch Germany
-    path: 'M 330,180 L 308,162 L 414,180 L 412,286 L 370,330 L 294,314 Z',
-    lx: 356, ly: 258, abbr: 'S',
+    // Salzburg — wedge with northern Germany tip (lon 12.28–13.98, lat 46.83–48.05)
+    path: 'M 295,221 L 300,178 L 343,221 L 436,221 L 436,403 L 274,406 Z',
+    lx: 360, ly: 310,
   },
   {
     id: 'OÖ',
-    // Oberösterreich – large northern state, HIGHLIGHTED
-    path: 'M 330,36 L 418,40 L 418,186 L 414,180 L 330,180 Z',
-    lx: 375, ly: 112, abbr: 'OÖ',
+    // Oberösterreich — large northern state, HIGHLIGHTED (lon 13.00–14.97, lat 47.82–48.88)
+    path: 'M 343,23 L 530,34 L 530,221 L 343,221 Z',
+    lx: 437, ly: 127,
     highlight: true,
   },
   {
     id: 'NÖ',
-    // Niederösterreich – large northeastern state
-    path: 'M 418,40 L 590,62 L 590,204 L 418,204 L 418,186 Z',
-    lx: 504, ly: 130, abbr: 'NÖ',
+    // Niederösterreich (lon 14.97–17.15, lat 47.82–48.82)
+    path: 'M 530,34 L 737,47 L 737,238 L 682,221 L 530,221 Z',
+    lx: 620, ly: 138,
   },
   {
     id: 'W',
-    // Wien – tiny box within NÖ
-    path: 'M 506,124 L 528,124 L 528,150 L 506,150 Z',
-    lx: 517, ly: 137, abbr: 'W',
+    // Wien — tiny enclave in NÖ (lon 16.18–16.58, lat 48.12–48.32)
+    path: 'M 636,128 L 683,128 L 683,165 L 636,165 Z',
+    lx: 659, ly: 147,
   },
   {
     id: 'ST',
-    // Steiermark – large southeastern
-    path: 'M 414,180 L 418,186 L 418,204 L 590,204 L 572,328 L 454,336 L 370,330 L 412,286 Z',
-    lx: 490, ly: 278, abbr: 'ST',
+    // Steiermark (lon 13.98–16.50, lat 46.60–47.82)
+    path: 'M 436,221 L 682,221 L 682,365 L 600,440 L 535,440 L 436,403 Z',
+    lx: 555, ly: 333,
   },
   {
     id: 'K',
-    // Kärnten – wide southern strip
-    path: 'M 294,314 L 370,330 L 454,336 L 454,394 L 294,394 Z',
-    lx: 372, ly: 364, abbr: 'K',
+    // Kärnten (lon 12.28–15.10, lat 46.35–46.83)
+    path: 'M 274,406 L 436,403 L 535,440 L 535,481 L 274,481 Z',
+    lx: 405, ly: 453,
   },
   {
     id: 'B',
-    // Burgenland – thin eastern strip
-    path: 'M 532,166 L 590,172 L 590,358 L 532,368 Z',
-    lx: 561, ly: 268, abbr: 'B',
+    // Burgenland — thin eastern strip (lon 16.50–17.15, lat 46.75–47.82)
+    path: 'M 682,221 L 737,238 L 737,412 L 682,412 Z',
+    lx: 710, ly: 330,
   },
 ];
 
@@ -123,126 +125,124 @@ export default function Region() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative"
           >
-            {/* Subtle ambient glow */}
-            <div
-              className="absolute inset-0 rounded-2xl pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at 60% 40%, rgba(45,90,80,0.25) 0%, transparent 70%)' }}
-              aria-hidden="true"
-            />
-
             <svg
-              viewBox="0 0 590 415"
+              viewBox="0 0 760 500"
               className="w-full"
               style={{ overflow: 'visible' }}
-              aria-label="Österreichkarte: Alle Bundesländer – Oberösterreich hervorgehoben"
+              aria-label="Österreichkarte: Alle 9 Bundesländer – Oberösterreich hervorgehoben"
+              role="img"
             >
               <title>Österreichkarte – Schwerpunkt Oberösterreich</title>
 
-              {/* Non-highlighted states – transparent fill, white outline */}
+              {/* Non-highlighted states — transparent fill, white outline */}
               {states.filter(s => !s.highlight).map(s => (
                 <path
                   key={s.id}
                   d={s.path}
                   fill="transparent"
-                  stroke="rgba(255,255,255,0.35)"
-                  strokeWidth="1.2"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                />
-              ))}
-
-              {/* OÖ – filled with site cream/beige */}
-              {states.filter(s => s.highlight).map(s => (
-                <path
-                  key={s.id}
-                  d={s.path}
-                  fill="#fdf8f0"
-                  fillOpacity="0.88"
-                  stroke="rgba(255,255,255,0.7)"
+                  stroke="rgba(255,255,255,0.30)"
                   strokeWidth="1.5"
                   strokeLinejoin="round"
                   aria-hidden="true"
                 />
               ))}
 
-              {/* State abbreviation labels (non-highlighted) */}
-              {states.filter(s => !s.highlight && s.id !== 'W' && s.id !== 'V' && s.id !== 'B').map(s => (
-                <text
-                  key={`lbl-${s.id}`}
-                  x={s.lx}
-                  y={s.ly}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="rgba(255,255,255,0.32)"
-                  fontSize="8"
-                  fontFamily="Inter, sans-serif"
-                  fontWeight="500"
+              {/* OÖ — cream/beige fill */}
+              {states.filter(s => s.highlight).map(s => (
+                <path
+                  key={s.id}
+                  d={s.path}
+                  fill="#fdf8f0"
+                  fillOpacity="0.85"
+                  stroke="rgba(255,255,255,0.65)"
+                  strokeWidth="1.8"
+                  strokeLinejoin="round"
                   aria-hidden="true"
-                >
-                  {s.abbr}
-                </text>
+                />
               ))}
+
+              {/* State labels — small abbreviations */}
+              {states
+                .filter(s => !s.highlight && s.id !== 'W' && s.id !== 'V' && s.id !== 'B')
+                .map(s => (
+                  <text
+                    key={`lbl-${s.id}`}
+                    x={s.lx}
+                    y={s.ly}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="rgba(255,255,255,0.30)"
+                    fontSize="10"
+                    fontFamily="Inter, system-ui, sans-serif"
+                    fontWeight="500"
+                    aria-hidden="true"
+                  >
+                    {s.id}
+                  </text>
+                ))}
 
               {/* OÖ label */}
               <text
-                x={375}
-                y={96}
+                x={437}
+                y={105}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="var(--teal-900)"
-                fontSize="6"
-                fontFamily="Inter, sans-serif"
+                fill="rgba(20,50,45,0.8)"
+                fontSize="8"
+                fontFamily="Inter, system-ui, sans-serif"
                 fontWeight="600"
-                letterSpacing="0.6"
+                letterSpacing="0.8"
                 aria-hidden="true"
               >
                 Oberösterreich
               </text>
               <text
-                x={375}
-                y={108}
+                x={437}
+                y={121}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="var(--teal-800)"
-                fontSize="10"
-                fontFamily="Inter, sans-serif"
+                fill="rgba(20,50,45,0.85)"
+                fontSize="13"
+                fontFamily="Inter, system-ui, sans-serif"
                 fontWeight="700"
                 aria-hidden="true"
               >
                 OÖ
               </text>
 
-              {/* Linz city dot with pulse */}
+              {/* Linz city dot — pulsing */}
               {inView && (
                 <>
                   <motion.circle
-                    cx={374} cy={122} r={4}
+                    cx={465} cy={130}
+                    r={5}
                     fill="none"
-                    stroke="var(--teal-700)"
+                    stroke="rgba(45,100,85,0.7)"
                     strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.8 }}
-                    animate={{ r: 14, opacity: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1 }}
+                    initial={{ r: 5, opacity: 0.7 }}
+                    animate={{ r: 18, opacity: 0 }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 0.8 }}
                   />
                   <motion.circle
-                    cx={374} cy={122} r={4}
+                    cx={465} cy={130}
+                    r={5}
                     fill="none"
-                    stroke="var(--teal-700)"
+                    stroke="rgba(45,100,85,0.7)"
                     strokeWidth="1"
-                    initial={{ r: 4, opacity: 0.8 }}
-                    animate={{ r: 14, opacity: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut', delay: 1.8 }}
+                    initial={{ r: 5, opacity: 0.7 }}
+                    animate={{ r: 18, opacity: 0 }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 1.6 }}
                   />
                 </>
               )}
-              <circle cx={374} cy={122} r={4} fill="var(--teal-800)" aria-hidden="true" />
-              <text x={380} y={119} fill="var(--teal-900)" fontSize="5.5" fontFamily="Inter, sans-serif" fontWeight="700" aria-hidden="true">
+              <circle cx={465} cy={130} r={5} fill="rgba(30,80,65,0.9)" aria-hidden="true" />
+              <text x={473} y={127} fill="rgba(20,50,45,0.85)" fontSize="7" fontFamily="Inter, system-ui, sans-serif" fontWeight="700" aria-hidden="true">
                 Linz
               </text>
 
               {/* Wien dot */}
-              <circle cx={517} cy={137} r={2.5} fill="rgba(255,255,255,0.4)" aria-hidden="true" />
-              <text x={521} y={134} fill="rgba(255,255,255,0.38)" fontSize="4.5" fontFamily="Inter, sans-serif" aria-hidden="true">
+              <circle cx={659} cy={147} r={3} fill="rgba(255,255,255,0.35)" aria-hidden="true" />
+              <text x={664} y={144} fill="rgba(255,255,255,0.28)" fontSize="6" fontFamily="Inter, system-ui, sans-serif" aria-hidden="true">
                 Wien
               </text>
             </svg>
