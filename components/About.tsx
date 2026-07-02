@@ -65,7 +65,7 @@ export default function About({ data }: Props) {
 
             <AnimatedSection delay={0.3}>
               <div className="flex flex-wrap gap-2 mt-8">
-                {['IT-Recruiting', 'Direktvermittlung', 'Active Sourcing', 'Oberösterreich'].map(
+                {['IT-Recruiting', 'Direktvermittlung', 'Active Sourcing', 'OÖ · Wien · SBG'].map(
                   (tag) => (
                     <span
                       key={tag}

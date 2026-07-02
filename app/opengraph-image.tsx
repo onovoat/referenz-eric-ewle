@@ -36,7 +36,7 @@ export default async function Image() {
           </div>
 
           <div style={{ display: 'flex', fontSize: 20, fontWeight: 400, color: TEAL, marginBottom: 28, letterSpacing: '0.02em' }}>
-            Recruiting · Wien &amp; Oberösterreich
+            Recruiting · OÖ · Wien · Salzburg
           </div>
 
           <div style={{ display: 'flex', width: 56, height: 2, backgroundColor: TEAL, marginBottom: 32 }} />

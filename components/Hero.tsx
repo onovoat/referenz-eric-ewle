@@ -163,7 +163,7 @@ export default function Hero({ data }: Props) {
         {/* Bottom name overlay — gradient for elegance */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent pt-20 pb-7 px-8">
           <p className="text-white font-bold text-base tracking-wide">Eric Ewle</p>
-          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">IT Personalberater · Wien</p>
+          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">IT Personalberater · OÖ · Wien · SBG</p>
         </div>
       </motion.div>
     </section>

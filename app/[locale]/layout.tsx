@@ -30,14 +30,14 @@ export async function generateMetadata({
   const isDe = locale === 'de';
   return {
     title: isDe
-      ? 'Eric Ewle | IT Personalberatung & Recruiting in Oberösterreich'
-      : 'Eric Ewle | IT Recruitment Consulting in Upper Austria',
+      ? 'Eric Ewle | IT Personalberatung & Recruiting in OÖ, Wien & Salzburg'
+      : 'Eric Ewle | IT Recruitment Consulting | Upper Austria, Vienna & Salzburg',
     description: isDe
-      ? 'Ich verbinde IT-Fachkräfte und Unternehmen in Oberösterreich. Direktvermittlung, Active Sourcing und Prozessoptimierung von Eric Ewle, Wien.'
-      : 'I connect IT professionals and companies in Upper Austria. Direct placement, active sourcing and process optimization by Eric Ewle, Vienna.',
+      ? 'Ich verbinde IT-Fachkräfte und Unternehmen in OÖ, Wien und Salzburg. Direktvermittlung, Active Sourcing und Prozessoptimierung von Eric Ewle.'
+      : 'I connect IT professionals and companies in Upper Austria, Vienna and Salzburg. Direct placement, active sourcing and process optimization by Eric Ewle.',
     keywords: isDe
-      ? ['IT Personalberatung', 'IT Recruiting', 'Personalvermittlung Oberösterreich', 'Active Sourcing', 'Eric Ewle']
-      : ['IT Recruitment', 'IT Staffing', 'Recruitment Consulting Upper Austria', 'Active Sourcing', 'Eric Ewle'],
+      ? ['IT Personalberatung', 'IT Recruiting', 'Personalvermittlung Wien', 'Personalvermittlung Oberösterreich', 'IT Recruiting Salzburg', 'Active Sourcing', 'Eric Ewle']
+      : ['IT Recruitment', 'IT Staffing', 'Recruitment Consulting Upper Austria', 'IT Recruiting Vienna', 'IT Recruiting Salzburg', 'Active Sourcing', 'Eric Ewle'],
     authors: [{ name: 'Eric Ewle' }],
     icons: {
       icon: '/favicon.svg',
@@ -67,7 +67,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: 'Eric Ewle Personalberatung',
-  description: 'IT Personalberatung und Recruiting in Oberösterreich',
+  description: 'IT Personalberatung und Recruiting in OÖ, Wien und Salzburg',
   url: 'https://eric-ewle.onovo.at',
   telephone: '+43 676 706 8736',
   email: 'office@ericewle.at',
@@ -78,7 +78,7 @@ const jsonLd = {
     postalCode: '1020',
     addressCountry: 'AT',
   },
-  areaServed: 'AT-4',
+  areaServed: ['AT-4', 'AT-9', 'AT-5'],
   sameAs: ['https://www.linkedin.com/in/eric-ewle-5946831a1'],
 };
 
