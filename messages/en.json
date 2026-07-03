@@ -5,14 +5,23 @@
     "region": "Region",
     "partners": "Partners",
     "contact": "Contact",
-    "cta": "Get in touch"
+    "cta": "Get in touch",
+    "slogan": "Connecting people. Creating success.",
+    "regions": "UA · Vienna · Salzburg"
   },
   "hero": {
-    "headline": "The right IT talent.",
-    "headline2": "The right companies.",
+    "headline": "Connecting people.",
+    "headline2": "Creating success.",
     "subline": "A connection that works long-term.",
+    "tagline": "IT Recruitment · Upper Austria · Vienna · Salzburg",
     "cta": "Get in touch",
-    "scroll": "Learn more"
+    "scroll": "Learn more",
+    "stat1_label": "Direct placement without detours",
+    "stat2_value": "UA · V · S",
+    "stat2_label": "Upper Austria · Vienna · Salzburg",
+    "stat3_label": "Focus on IT Recruiting",
+    "photo_name": "Eric Ewle",
+    "photo_role": "IT Recruitment Consultant · UA · Vienna · SBG"
   },
   "about": {
     "label": "ABOUT ME",
@@ -20,7 +29,11 @@
     "text1": "My name is Eric Ewle and my passion is bringing companies and IT professionals together successfully. Through my extensive experience in direct placement of IT specialists, I know what it takes to fill IT positions successfully.",
     "text2": "I help companies find specialized IT talent and guide IT experts in finding the right job.",
     "mission_label": "My Mission",
-    "mission": "To help both companies and IT experts achieve their goals and enable successful collaboration."
+    "mission": "To help both companies and IT experts achieve their goals and enable successful collaboration.",
+    "tag1": "IT Recruiting",
+    "tag2": "Direct Placement",
+    "tag3": "Active Sourcing",
+    "tag4": "UA · Vienna · SBG"
   },
   "services": {
     "label": "SERVICES",
@@ -43,7 +56,7 @@
   "region": {
     "label": "REGION",
     "heading": "Focus: Upper Austria, Vienna & Salzburg",
-    "text": "Based in Vienna, I actively serve companies and IT professionals in Upper Austria, Vienna and Salzburg. My network across all three regions enables fast, precise placements.",
+    "text": "As an IT recruitment consultant with a network across three federal states, I serve companies and professionals in Upper Austria, Vienna and Salzburg. Whether software development, IT infrastructure or data engineering – I provide precise placements across all three regions.",
     "badge1": "Upper Austria",
     "badge2": "Vienna",
     "badge3": "Salzburg"
@@ -63,16 +76,24 @@
     "benefit2_text": "I handle your data confidentially and in compliance with applicable law.",
     "form": {
       "firstname": "First name",
+      "firstname_placeholder": "Jane",
       "lastname": "Last name",
+      "lastname_placeholder": "Smith",
       "company": "Company",
+      "company_placeholder": "Your company",
       "email": "E-mail",
+      "email_placeholder": "contact@company.com",
       "phone": "Phone",
+      "phone_placeholder": "+43 ...",
       "need": "Staffing need / Area",
       "need_placeholder": "e.g. Software Development, IT Infrastructure, Data Engineering",
       "message": "Message",
       "message_placeholder": "Briefly describe the positions you are looking to fill.",
       "attachment": "Attachment (optional, PDF)",
-      "gdpr": "I agree to the processing of my data in accordance with the privacy policy.",
+      "attachment_button": "Upload file",
+      "gdpr": "I agree to the processing of my data in accordance with the",
+      "gdpr_link": "Privacy Policy",
+      "gdpr_suffix": ".",
       "submit": "Send inquiry",
       "sending": "Sending...",
       "success": "Thank you! I will be in touch shortly.",

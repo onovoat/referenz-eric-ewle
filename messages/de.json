@@ -5,14 +5,23 @@
     "region": "Einsatzgebiet",
     "partners": "Partner",
     "contact": "Kontakt",
-    "cta": "Kontakt aufnehmen"
+    "cta": "Kontakt aufnehmen",
+    "slogan": "Menschen verbinden. Erfolg gestalten.",
+    "regions": "OÖ · Wien · Salzburg"
   },
   "hero": {
-    "headline": "Die richtigen IT-Talente.",
-    "headline2": "Die passenden Unternehmen.",
+    "headline": "Menschen verbinden.",
+    "headline2": "Erfolg gestalten.",
     "subline": "Eine Verbindung, die langfristig funktioniert.",
+    "tagline": "IT Personalberatung · OÖ · Wien · Salzburg",
     "cta": "Jetzt Kontakt aufnehmen",
-    "scroll": "Mehr erfahren"
+    "scroll": "Mehr erfahren",
+    "stat1_label": "Direktvermittlung ohne Umwege",
+    "stat2_value": "OÖ · W · S",
+    "stat2_label": "OÖ · Wien · Salzburg",
+    "stat3_label": "Schwerpunkt IT-Recruiting",
+    "photo_name": "Eric Ewle",
+    "photo_role": "IT Personalberater · OÖ · Wien · SBG"
   },
   "about": {
     "label": "ÜBER MICH",
@@ -20,7 +29,11 @@
     "text1": "Mein Name ist Eric Ewle und meine Leidenschaft ist es, Unternehmen und IT-Fachkräfte erfolgreich zusammenzubringen. Durch meine langjährige Erfahrung in der Direktvermittlung von IT-Fachkräften weiß ich, worauf es bei der erfolgreichen Besetzung von IT-Positionen ankommt.",
     "text2": "Ich unterstütze Unternehmen dabei, spezialisierte IT-Talente zu finden, und begleite IT-Expert*innen dabei, den passenden Job zu finden.",
     "mission_label": "Meine Mission",
-    "mission": "Sowohl Unternehmen als auch IT-Expert*innen dabei zu helfen, ihre Ziele zu erreichen und eine erfolgreiche Zusammenarbeit zu ermöglichen."
+    "mission": "Sowohl Unternehmen als auch IT-Expert*innen dabei zu helfen, ihre Ziele zu erreichen und eine erfolgreiche Zusammenarbeit zu ermöglichen.",
+    "tag1": "IT-Recruiting",
+    "tag2": "Direktvermittlung",
+    "tag3": "Active Sourcing",
+    "tag4": "OÖ · Wien · SBG"
   },
   "services": {
     "label": "LEISTUNGEN",
@@ -42,8 +55,8 @@
   },
   "region": {
     "label": "EINSATZGEBIET",
-    "heading": "Fokus auf OÖ, Wien & Salzburg",
-    "text": "Mit Sitz in Wien betreue ich Unternehmen und IT-Fachkräfte gezielt in Oberösterreich, Wien und Salzburg. Mein Netzwerk in allen drei Regionen ermöglicht schnelle, passgenaue Vermittlung.",
+    "heading": "Schwerpunkt: OÖ, Wien & Salzburg",
+    "text": "Als IT-Personalberater mit Netzwerk in drei Bundesländern begleite ich Unternehmen und Fachkräfte in Oberösterreich, Wien und Salzburg. Ob Softwareentwicklung, IT-Infrastruktur oder Data Engineering – ich sorge für passgenaue Besetzungen in allen drei Regionen.",
     "badge1": "Oberösterreich",
     "badge2": "Wien",
     "badge3": "Salzburg"
@@ -63,16 +76,24 @@
     "benefit2_text": "Ihre Daten behandle ich vertraulich und gesetzeskonform.",
     "form": {
       "firstname": "Vorname",
+      "firstname_placeholder": "Maria",
       "lastname": "Nachname",
+      "lastname_placeholder": "Musterfrau",
       "company": "Unternehmen",
+      "company_placeholder": "Ihr Unternehmen",
       "email": "E-Mail",
+      "email_placeholder": "kontakt@firma.at",
       "phone": "Telefon",
+      "phone_placeholder": "+43 ...",
       "need": "Personalbedarf / Bereich",
       "need_placeholder": "z. B. Software-Entwicklung, IT-Infrastruktur, Data Engineering",
       "message": "Nachricht",
       "message_placeholder": "Beschreiben Sie kurz, welche Positionen Sie besetzen möchten.",
       "attachment": "Anhang (optional, PDF)",
-      "gdpr": "Ich stimme der Verarbeitung meiner Daten gemäß Datenschutzerklärung zu.",
+      "attachment_button": "Datei hochladen",
+      "gdpr": "Ich stimme der Verarbeitung meiner Daten gemäß",
+      "gdpr_link": "Datenschutzerklärung",
+      "gdpr_suffix": "zu.",
       "submit": "Anfrage absenden",
       "sending": "Wird gesendet...",
       "success": "Vielen Dank! Ich melde mich in Kürze bei Ihnen.",

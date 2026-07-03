@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -28,6 +28,14 @@ function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; d
 
 export default function About({ data }: Props) {
   const t = useTranslations('about');
+  const locale = useLocale();
+
+  // For EN, CMS content is in German — fall back to translation strings
+  const text1 = locale === 'de' ? (data.ueber_uns_text || t('text1')) : t('text1');
+  const text2 = locale === 'de' ? (data.ueber_uns_text2 || t('text2')) : t('text2');
+  const mission = locale === 'de' ? (data.mission || t('mission')) : t('mission');
+
+  const tags = [t('tag1'), t('tag2'), t('tag3'), t('tag4')];
 
   return (
     <section id="about" className="py-24 lg:py-32 bg-white">
@@ -45,10 +53,10 @@ export default function About({ data }: Props) {
 
             <AnimatedSection delay={0.1}>
               <p className="text-[var(--text-secondary)] leading-relaxed mb-4 text-base sm:text-lg">
-                {data.ueber_uns_text}
+                {text1}
               </p>
               <p className="text-[var(--text-secondary)] leading-relaxed text-base sm:text-lg">
-                {data.ueber_uns_text2}
+                {text2}
               </p>
             </AnimatedSection>
 
@@ -58,23 +66,21 @@ export default function About({ data }: Props) {
                   {t('mission_label')}
                 </p>
                 <p className="text-[var(--text-primary)] font-medium leading-relaxed">
-                  {data.mission}
+                  {mission}
                 </p>
               </div>
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
               <div className="flex flex-wrap gap-2 mt-8">
-                {['IT-Recruiting', 'Direktvermittlung', 'Active Sourcing', 'OÖ · Wien · SBG'].map(
-                  (tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-semibold text-[var(--teal-700)] bg-[var(--bg-alt)] border border-[var(--border)] px-3 py-1.5 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  )
-                )}
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs font-semibold text-[var(--teal-700)] bg-[var(--bg-alt)] border border-[var(--border)] px-3 py-1.5 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </AnimatedSection>
           </div>
@@ -82,7 +88,6 @@ export default function About({ data }: Props) {
           <div className="order-1 lg:order-2">
             <AnimatedSection delay={0.1}>
               <div className="relative">
-                {/* Offset background block for depth — no arbitrary blobs */}
                 <div
                   className="absolute -right-4 -bottom-4 w-full h-full bg-[var(--teal-800)] opacity-[0.08]"
                   aria-hidden="true"

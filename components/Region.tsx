@@ -68,9 +68,10 @@ export default function Region() {
             <AustriaMap
               className="w-full"
               lineColor="#6b8dc8"
-              strokeWidth={1.5}
+              strokeWidth={2}
               fill="transparent"
-              hoverFill="#fdf8f0"
+              hoverFill="transparent"
+              highlightedHoverFill="#b8cce8"
               stateFills={{
                 oberoesterreich: '#fdf8f0',
                 salzburg: '#fdf8f0',

@@ -9,7 +9,6 @@ type Props = {
   data: SiteData;
 };
 
-// Animates a string character by character
 function TypewriterText({ text, startDelay }: { text: string; startDelay: number }) {
   return (
     <>
@@ -38,7 +37,6 @@ export default function Hero({ data }: Props) {
       {/* Left panel — warm cream */}
       <div className="relative z-10 flex flex-col justify-center w-full lg:w-[56%] bg-[var(--cream)] px-8 sm:px-12 lg:px-16 xl:px-24 pt-28 pb-16 lg:py-0 min-h-[60vh] lg:min-h-screen">
 
-        {/* Decorative thin vertical accent line */}
         <div
           className="absolute left-0 top-1/4 bottom-1/4 w-[3px] bg-[var(--teal-800)] hidden lg:block"
           aria-hidden="true"
@@ -51,7 +49,7 @@ export default function Hero({ data }: Props) {
           className="max-w-xl"
         >
           <span className="inline-block text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase mb-6 border-b border-[var(--teal-400)] pb-1">
-            IT Personalberatung · OÖ · Wien · Salzburg
+            {t('tagline')}
           </span>
 
           <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-bold text-[var(--text-primary)] leading-[1.15] mb-6">
@@ -79,7 +77,7 @@ export default function Hero({ data }: Props) {
             </a>
           </div>
 
-          {/* Stats — full-width spread, typewriter entrance */}
+          {/* Stats */}
           <div className="flex items-start justify-between pt-8 border-t border-[var(--border)]">
             <div>
               <div className="text-2xl font-bold text-[var(--teal-800)]">
@@ -90,19 +88,19 @@ export default function Hero({ data }: Props) {
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 1.2 }}
               >
-                Direktvermittlung<br />ohne Umwege
+                {t('stat1_label')}
               </motion.div>
             </div>
             <div>
               <div className="text-2xl font-bold text-[var(--teal-800)]">
-                <TypewriterText text="OÖ · W · S" startDelay={1.2} />
+                <TypewriterText text={t('stat2_value')} startDelay={1.2} />
               </div>
               <motion.div
                 className="text-xs text-[var(--text-muted)] mt-1 leading-snug"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 1.5 }}
               >
-                OÖ · Wien · Salzburg
+                {t('stat2_label')}
               </motion.div>
             </div>
             <div>
@@ -114,7 +112,7 @@ export default function Hero({ data }: Props) {
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 1.8 }}
               >
-                Ausschließlich<br />IT-Positionen
+                {t('stat3_label')}
               </motion.div>
             </div>
           </div>
@@ -128,7 +126,6 @@ export default function Hero({ data }: Props) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.15 }}
       >
-        {/* Subtle dot pattern texture */}
         <div
           className="absolute inset-0 opacity-[0.07]"
           aria-hidden="true"
@@ -160,10 +157,9 @@ export default function Hero({ data }: Props) {
           </div>
         )}
 
-        {/* Bottom name overlay — gradient for elegance */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent pt-20 pb-7 px-8">
-          <p className="text-white font-bold text-base tracking-wide">Eric Ewle</p>
-          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">IT Personalberater · OÖ · Wien · SBG</p>
+          <p className="text-white font-bold text-base tracking-wide">{t('photo_name')}</p>
+          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">{t('photo_role')}</p>
         </div>
       </motion.div>
     </section>

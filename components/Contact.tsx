@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
@@ -17,6 +17,7 @@ declare global {
 export default function Contact() {
   const t = useTranslations('contact');
   const f = useTranslations('contact.form');
+  const locale = useLocale();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const turnstileRef = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ export default function Contact() {
           callback: (t: string) => setToken(t),
           'expired-callback': () => setToken(''),
           theme: 'light',
-          language: 'de',
+          language: locale,
         });
       }
     };
@@ -54,7 +55,7 @@ export default function Contact() {
       window.addEventListener('turnstileLoaded', renderWidget, { once: true });
     }
     return () => window.removeEventListener('turnstileLoaded', renderWidget);
-  }, []);
+  }, [locale]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -89,6 +90,8 @@ export default function Contact() {
   const inputClass =
     'w-full rounded-lg border border-[var(--border)] bg-[var(--stone-50)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--teal-700)] focus:border-transparent focus:bg-white transition-colors min-h-[44px]';
   const labelClass = 'block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 tracking-wide';
+
+  const privacyHref = locale === 'de' ? '/datenschutz' : '/en/datenschutz';
 
   return (
     <>
@@ -172,7 +175,7 @@ export default function Contact() {
                   onSubmit={handleSubmit}
                   className="bg-white rounded-2xl border border-[var(--border-light)] p-6 sm:p-8 shadow-sm shadow-black/5"
                   noValidate
-                  aria-label="Kontaktformular"
+                  aria-label={t('label')}
                 >
                   <div className="grid sm:grid-cols-2 gap-4 mb-4">
                     <div>
@@ -185,7 +188,7 @@ export default function Contact() {
                         required
                         autoComplete="given-name"
                         className={inputClass}
-                        placeholder="Maria"
+                        placeholder={f('firstname_placeholder')}
                         value={form.firstname}
                         onChange={(e) => setForm({ ...form, firstname: e.target.value })}
                       />
@@ -200,7 +203,7 @@ export default function Contact() {
                         required
                         autoComplete="family-name"
                         className={inputClass}
-                        placeholder="Musterfrau"
+                        placeholder={f('lastname_placeholder')}
                         value={form.lastname}
                         onChange={(e) => setForm({ ...form, lastname: e.target.value })}
                       />
@@ -217,7 +220,7 @@ export default function Contact() {
                       required
                       autoComplete="organization"
                       className={inputClass}
-                      placeholder="Ihr Unternehmen"
+                      placeholder={f('company_placeholder')}
                       value={form.company}
                       onChange={(e) => setForm({ ...form, company: e.target.value })}
                     />
@@ -234,7 +237,7 @@ export default function Contact() {
                         required
                         autoComplete="email"
                         className={inputClass}
-                        placeholder="kontakt@firma.at"
+                        placeholder={f('email_placeholder')}
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                       />
@@ -246,7 +249,7 @@ export default function Contact() {
                         type="tel"
                         autoComplete="tel"
                         className={inputClass}
-                        placeholder="+43 ..."
+                        placeholder={f('phone_placeholder')}
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       />
@@ -304,9 +307,10 @@ export default function Contact() {
                       />
                       <span className="text-xs text-[var(--text-secondary)] leading-relaxed group-hover:text-[var(--text-primary)] transition-colors">
                         {f('gdpr')}{' '}
-                        <a href="/datenschutz" className="text-[var(--teal-700)] underline underline-offset-2 hover:text-[var(--teal-600)]">
-                          Datenschutzerklärung
+                        <a href={privacyHref} className="text-[var(--teal-700)] underline underline-offset-2 hover:text-[var(--teal-600)]">
+                          {f('gdpr_link')}
                         </a>
+                        {' '}{f('gdpr_suffix')}
                       </span>
                     </label>
                   </div>
