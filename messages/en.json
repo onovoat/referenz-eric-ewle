@@ -43,8 +43,10 @@
   "region": {
     "label": "REGION",
     "heading": "Focus: Upper Austria, Vienna & Salzburg",
-    "text": "Based in Vienna, I serve companies and IT professionals across Upper Austria, Vienna and Salzburg. My goal: to sustainably connect companies and IT talent across all three regions.",
-    "badge": "Upper Austria · Vienna · Salzburg"
+    "text": "Based in Vienna, I actively serve companies and IT professionals in Upper Austria, Vienna and Salzburg. My network across all three regions enables fast, precise placements.",
+    "badge1": "Upper Austria",
+    "badge2": "Vienna",
+    "badge3": "Salzburg"
   },
   "partners": {
     "label": "PARTNERS",

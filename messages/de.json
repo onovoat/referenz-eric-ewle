@@ -42,9 +42,11 @@
   },
   "region": {
     "label": "EINSATZGEBIET",
-    "heading": "Schwerpunkt OÖ, Wien & Salzburg",
-    "text": "Mit Sitz in Wien betreue ich Unternehmen und IT-Fachkräfte in Oberösterreich, Wien und Salzburg. Mein Ziel: Unternehmen und IT-Talente in allen drei Regionen nachhaltig zusammenzubringen.",
-    "badge": "OÖ · Wien · Salzburg"
+    "heading": "Fokus auf OÖ, Wien & Salzburg",
+    "text": "Mit Sitz in Wien betreue ich Unternehmen und IT-Fachkräfte gezielt in Oberösterreich, Wien und Salzburg. Mein Netzwerk in allen drei Regionen ermöglicht schnelle, passgenaue Vermittlung.",
+    "badge1": "Oberösterreich",
+    "badge2": "Wien",
+    "badge3": "Salzburg"
   },
   "partners": {
     "label": "PARTNER",
