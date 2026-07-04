@@ -19,7 +19,7 @@ export default async function HomePage({
   return (
     <>
       <Header locale={locale} />
-      <main id="main-content">
+      <main id="main-content" className="pt-16 lg:pt-20">
         <Hero data={data} />
         <About data={data} />
         <Services />

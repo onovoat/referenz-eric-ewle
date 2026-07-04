@@ -45,6 +45,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 4rem; /* mobile header h-16 */
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 5rem; /* desktop header h-20 */
+  }
 }
 
 body {

@@ -35,7 +35,7 @@ export default function Hero({ data }: Props) {
       aria-label="Hero"
     >
       {/* Left panel — warm cream */}
-      <div className="relative z-10 flex flex-col justify-center w-full lg:w-[56%] bg-[var(--cream)] px-8 sm:px-12 lg:px-16 xl:px-24 pt-28 pb-16 lg:py-0 min-h-[60vh] lg:min-h-screen">
+      <div className="relative z-10 flex flex-col justify-center w-full lg:w-[56%] bg-[var(--cream)] px-8 sm:px-12 lg:px-16 xl:px-24 pt-12 pb-16 lg:py-0 min-h-[60vh] lg:min-h-screen">
 
         <div
           className="absolute left-0 top-1/4 bottom-1/4 w-[3px] bg-[var(--teal-800)] hidden lg:block"
