@@ -17,6 +17,8 @@ export interface AustriaMapProps
   highlightedHoverFill?: string;
   /** How much a highlighted state grows on hover. 1 = no growth. Default: 1.04. */
   hoverScale?: number;
+  /** Per-state scale overrides on hover (e.g. { wien: 1.8 } for small states). */
+  stateScales?: Partial<Record<string, number>>;
   /** Border thickness in viewBox units. Default: 1.2. */
   strokeWidth?: number;
   /** Called with the state id when a state is clicked. */
@@ -30,6 +32,7 @@ export default function AustriaMap({
   stateFills,
   highlightedHoverFill = "#b8cce8",
   hoverScale = 1.04,
+  stateScales,
   strokeWidth = 1.2,
   onSelect,
   ...svgProps
@@ -90,7 +93,7 @@ export default function AustriaMap({
             strokeLinecap="round"
             className="at-state"
             style={{
-              transform: (isActive && isHighlighted) ? `scale(${hoverScale})` : "scale(1)",
+              transform: (isActive && isHighlighted) ? `scale(${stateScales?.[s.id] ?? hoverScale})` : "scale(1)",
               cursor: interactive ? "pointer" : (isHighlighted ? "default" : "default"),
             }}
           />

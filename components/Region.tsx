@@ -72,6 +72,8 @@ export default function Region() {
               fill="transparent"
               hoverFill="transparent"
               highlightedHoverFill="#b8cce8"
+              hoverScale={1.04}
+              stateScales={{ wien: 1.7 }}
               stateFills={{
                 oberoesterreich: '#fdf8f0',
                 salzburg: '#fdf8f0',
