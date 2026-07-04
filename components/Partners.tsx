@@ -28,27 +28,25 @@ export default function Partners() {
   return (
     <section id="partners" className="py-24 lg:py-32 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-end mb-14">
-          <div>
-            <motion.span
-              className="text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-400)] pb-1 inline-block"
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              {t('label')}
-            </motion.span>
-            <motion.h2
-              className="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-5 leading-tight"
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              {t('heading')}
-            </motion.h2>
-          </div>
+        <div ref={ref} className="mb-14">
+          <motion.span
+            className="text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-400)] pb-1 inline-block"
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
+            {t('label')}
+          </motion.span>
+          <motion.h2
+            className="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-5 mb-5 leading-tight"
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {t('heading')}
+          </motion.h2>
           <motion.p
-            className="text-[var(--text-secondary)] text-base leading-relaxed"
+            className="text-[var(--text-secondary)] text-base leading-relaxed max-w-2xl"
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
