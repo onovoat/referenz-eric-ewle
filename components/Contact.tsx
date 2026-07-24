@@ -46,6 +46,7 @@ export default function Contact() {
           'expired-callback': () => setToken(''),
           theme: 'light',
           language: locale,
+          size: window.innerWidth < 400 ? 'compact' : 'normal',
         });
       }
     };
@@ -103,7 +104,7 @@ export default function Contact() {
 
       <section id="contact" className="py-24 lg:py-32 bg-[var(--bg-alt)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div ref={ref} className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+          <div ref={ref} className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
             <div className="lg:col-span-2">
               <motion.span
                 className="text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase border-b border-[var(--teal-400)] pb-1 inline-block"

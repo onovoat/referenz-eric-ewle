@@ -78,9 +78,9 @@ export default function Hero({ data }: Props) {
           </div>
 
           {/* Stats */}
-          <div className="flex items-start justify-between pt-8 border-t border-[var(--border)]">
+          <div className="flex flex-wrap lg:flex-nowrap items-start justify-between gap-x-6 gap-y-4 pt-8 border-t border-[var(--border)]">
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--teal-800)] whitespace-nowrap">
                 <TypewriterText text="100%" startDelay={0.8} />
               </div>
               <motion.div
@@ -92,7 +92,7 @@ export default function Hero({ data }: Props) {
               </motion.div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--teal-800)] whitespace-nowrap">
                 <TypewriterText text={t('stat2_value')} startDelay={1.2} />
               </div>
               <motion.div
@@ -104,7 +104,7 @@ export default function Hero({ data }: Props) {
               </motion.div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-[var(--teal-800)]">
+              <div className="text-xl sm:text-2xl font-bold text-[var(--teal-800)] whitespace-nowrap">
                 <TypewriterText text="IT" startDelay={1.55} />
               </div>
               <motion.div
