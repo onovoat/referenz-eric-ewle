@@ -3,7 +3,7 @@
     "about": "About",
     "services": "Services",
     "region": "Region",
-    "partners": "Partners",
+    "partners": "Partner Companies",
     "contact": "Contact",
     "cta": "Get in touch",
     "slogan": "Connecting people. Creating success.",
@@ -48,8 +48,8 @@
         "description": "Through targeted active sourcing and my existing network, I proactively identify and recruit highly qualified talent who may not be actively looking for a job. This gives you access to the best available professionals in the market."
       },
       {
-        "title": "Process Optimization",
-        "description": "I advise you on improving your recruiting strategies and processes so you can find and retain the right IT professionals more efficiently in the long run."
+        "title": "Employer Branding & Candidate Experience",
+        "description": "I help you position your company as an attractive employer for IT professionals and create a compelling candidate experience."
       }
     ]
   },
@@ -62,14 +62,14 @@
     "badge3": "Salzburg"
   },
   "partners": {
-    "label": "PARTNERS",
+    "label": "PARTNER COMPANIES",
     "heading": "Companies that trust me",
     "text": "I work closely with selected companies to find the best IT professionals for their teams."
   },
   "contact": {
     "label": "GET IN TOUCH",
     "heading": "Let's talk.",
-    "subtext": "Tell me briefly about your staffing needs. I will get back to you.",
+    "subtext": "The first step starts with a conversation. Are you looking for recruiting support or open to a new professional challenge? Write to me, I look forward to connecting.",
     "benefit1_title": "Free initial consultation",
     "benefit1_text": "No obligation whatsoever. I listen first.",
     "benefit2_title": "GDPR compliant",
@@ -79,16 +79,16 @@
       "firstname_placeholder": "Jane",
       "lastname": "Last name",
       "lastname_placeholder": "Smith",
-      "company": "Company",
+      "company": "Company (optional)",
       "company_placeholder": "Your company",
       "email": "E-mail",
       "email_placeholder": "contact@company.com",
       "phone": "Phone",
       "phone_placeholder": "+43 ...",
-      "need": "Staffing need / Area",
+      "need": "Staffing need / Desired position",
       "need_placeholder": "e.g. Software Development, IT Infrastructure, Data Engineering",
       "message": "Message",
-      "message_placeholder": "Briefly describe the positions you are looking to fill.",
+      "message_placeholder": "Briefly describe your request.",
       "attachment": "Attachment (optional, PDF)",
       "attachment_button": "Upload file",
       "gdpr": "I agree to the processing of my data in accordance with the",

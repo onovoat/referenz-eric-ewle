@@ -213,12 +213,11 @@ export default function Contact() {
 
                   <div className="mb-4">
                     <label htmlFor="company" className={labelClass}>
-                      {f('company')} <span className="text-red-500" aria-hidden="true">*</span>
+                      {f('company')}
                     </label>
                     <input
                       id="company"
                       type="text"
-                      required
                       autoComplete="organization"
                       className={inputClass}
                       placeholder={f('company_placeholder')}
