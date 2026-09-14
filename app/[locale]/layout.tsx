@@ -20,6 +20,7 @@ const playfair = Playfair_Display({
 });
 
 const locales = ['de', 'en'];
+const SITE_URL = 'https://ericewle.at';
 
 export async function generateMetadata({
   params,
@@ -28,7 +29,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const isDe = locale === 'de';
+  const path = isDe ? '/' : '/en';
   return {
+    metadataBase: new URL(SITE_URL),
+    alternates: {
+      canonical: path,
+      languages: { de: '/', en: '/en' },
+    },
     title: isDe
       ? 'Eric Ewle | IT Personalberatung & Recruiting in OÖ, Wien & Salzburg'
       : 'Eric Ewle | IT Recruitment Consulting | Upper Austria, Vienna & Salzburg',
@@ -50,7 +57,7 @@ export async function generateMetadata({
         : 'Connecting IT professionals and companies successfully.',
       locale: isDe ? 'de_AT' : 'en_US',
       type: 'website',
-      url: 'https://eric-ewle.onovo.at',
+      url: `${SITE_URL}${isDe ? '' : '/en'}`,
       siteName: 'Eric Ewle',
     },
     twitter: {
@@ -68,7 +75,7 @@ const jsonLd = {
   '@type': 'LocalBusiness',
   name: 'Eric Ewle Personalberatung',
   description: 'IT Personalberatung und Recruiting in OÖ, Wien und Salzburg',
-  url: 'https://eric-ewle.onovo.at',
+  url: 'https://ericewle.at',
   telephone: '+43 676 706 8736',
   email: 'office@ericewle.at',
   address: {
