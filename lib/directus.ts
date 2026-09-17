@@ -3,15 +3,43 @@ import { bildAusDirectus, dateiFelder, type Bild, type DirectusDatei } from './b
 const DIRECTUS_URL = process.env.DIRECTUS_URL!;
 const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN!;
 
-/** Inhaltsfelder, die die sichtbare Website füllt. */
+export type Leistung = { titel: string; beschreibung: string };
+
+/**
+ * Inhaltsfelder, die die sichtbare Website füllt.
+ *
+ * Die deutschen Texte kommen von hier, die englischen aus `messages/en.json`.
+ * Welcher Wert gilt, entscheidet `lib/inhalt.ts`; dort steht auch, warum.
+ * Alles optional: Ein leeres Feld fällt auf den ausgelieferten Text zurück.
+ */
 export type SiteData = {
   firmenname: string;
-  slogan: string;
   ueber_uns_text: string;
   ueber_uns_text2: string;
   mission: string;
+  /* Stammdaten: einzige Quelle, auch für JSON-LD und die Rechtstexte. */
   telefon: string;
   email: string;
+  hero_headline: string | null;
+  hero_headline2: string | null;
+  hero_subline: string | null;
+  hero_tagline: string | null;
+  hero_rolle: string | null;
+  about_heading: string | null;
+  about_tags: string[] | null;
+  services_heading: string | null;
+  services_items: Leistung[] | null;
+  region_heading: string | null;
+  region_text: string | null;
+  region_badges: string[] | null;
+  partners_heading: string | null;
+  partners_text: string | null;
+  contact_heading: string | null;
+  contact_subtext: string | null;
+  contact_vorteil1_titel: string | null;
+  contact_vorteil1_text: string | null;
+  contact_vorteil2_titel: string | null;
+  contact_vorteil2_text: string | null;
   /**
    * Einzeilige Anschrift für die Darstellung und für {{ADRESSE}} in der
    * Datenschutzerklärung. Abgeleitet aus strasse_hausnummer, plz und ort, damit
@@ -72,9 +100,14 @@ export type LegalData = {
   whatsapp_link: boolean;
 };
 
+/**
+ * Nur die Stammdaten und die drei Langtexte haben einen Ersatzwert: Ohne
+ * Directus soll die Seite erreichbar bleiben. Die übrigen Inhaltsfelder stehen
+ * auf null und fallen damit auf `messages/de.json` zurück, statt hier ein
+ * zweites Mal gepflegt zu werden.
+ */
 const fallback: SiteData = {
   firmenname: 'Eric Ewle',
-  slogan: 'Menschen verbinden. Erfolg gestalten.',
   ueber_uns_text:
     'Mein Name ist Eric Ewle und meine Leidenschaft ist es, Unternehmen und IT-Fachkräfte erfolgreich zusammenzubringen. Durch meine langjährige Erfahrung in der Direktvermittlung von IT-Fachkräften weiß ich, worauf es bei der erfolgreichen Besetzung von IT-Positionen ankommt.',
   ueber_uns_text2:
@@ -85,6 +118,26 @@ const fallback: SiteData = {
   email: 'office@ericewle.at',
   adresse: 'Dresdnerstrasse 117, 1020 Wien',
   linkedin: 'https://www.linkedin.com/in/eric-ewle-5946831a1',
+  hero_headline: null,
+  hero_headline2: null,
+  hero_subline: null,
+  hero_tagline: null,
+  hero_rolle: null,
+  about_heading: null,
+  about_tags: null,
+  services_heading: null,
+  services_items: null,
+  region_heading: null,
+  region_text: null,
+  region_badges: null,
+  partners_heading: null,
+  partners_text: null,
+  contact_heading: null,
+  contact_subtext: null,
+  contact_vorteil1_titel: null,
+  contact_vorteil1_text: null,
+  contact_vorteil2_titel: null,
+  contact_vorteil2_text: null,
   /* Kein Ersatzbild: Ohne Directus gibt es auch keinen Alt-Text, und ein Bild
      ohne Beschreibung ist fuer blinde Besucher schlechter als die
      Platzhalterflaeche, die die Komponenten dann zeigen. */
@@ -128,6 +181,34 @@ async function ladeItem(): Promise<DirectusItem | null> {
   }
 }
 
+/**
+ * Ein csv-Feld aus Directus. Die API liefert je nach Alter des Eintrags eine
+ * Liste oder eine Zeichenkette mit Kommas, deshalb beide Formen abfangen.
+ */
+function liste(wert: unknown): string[] | null {
+  const roh = Array.isArray(wert)
+    ? wert
+    : typeof wert === 'string' && wert.trim()
+      ? wert.split(',')
+      : null;
+  if (!roh) return null;
+  const sauber = roh.map((w) => String(w).trim()).filter(Boolean);
+  return sauber.length ? sauber : null;
+}
+
+/** Die Leistungen aus dem json-Feld, unbrauchbare Einträge fallen weg. */
+function leistungen(wert: unknown): Leistung[] | null {
+  if (!Array.isArray(wert)) return null;
+  const gueltig = wert
+    .filter((x): x is Record<string, unknown> => typeof x === 'object' && x !== null)
+    .map((x) => ({
+      titel: String(x.titel ?? '').trim(),
+      beschreibung: String(x.beschreibung ?? '').trim(),
+    }))
+    .filter((x) => x.titel);
+  return gueltig.length ? gueltig : null;
+}
+
 /** Text oder null. Leere Zeichenketten aus Directus gelten als nicht gesetzt. */
 function text(wert: unknown): string | null {
   return typeof wert === 'string' && wert.trim() !== '' ? wert : null;
@@ -145,7 +226,6 @@ export async function getSiteData(): Promise<SiteData> {
 
   return {
     firmenname: text(item.firmenname) ?? fallback.firmenname,
-    slogan: text(item.slogan) ?? fallback.slogan,
     ueber_uns_text: text(item.ueber_uns_text) ?? fallback.ueber_uns_text,
     ueber_uns_text2: text(item.ueber_uns_text2) ?? fallback.ueber_uns_text2,
     mission: text(item.mission) ?? fallback.mission,
@@ -153,6 +233,26 @@ export async function getSiteData(): Promise<SiteData> {
     email: text(item.email) ?? fallback.email,
     adresse: abgeleitet || fallback.adresse,
     linkedin: text(item.linkedin) ?? fallback.linkedin,
+    hero_headline: text(item.hero_headline),
+    hero_headline2: text(item.hero_headline2),
+    hero_subline: text(item.hero_subline),
+    hero_tagline: text(item.hero_tagline),
+    hero_rolle: text(item.hero_rolle),
+    about_heading: text(item.about_heading),
+    about_tags: liste(item.about_tags),
+    services_heading: text(item.services_heading),
+    services_items: leistungen(item.services_items),
+    region_heading: text(item.region_heading),
+    region_text: text(item.region_text),
+    region_badges: liste(item.region_badges),
+    partners_heading: text(item.partners_heading),
+    partners_text: text(item.partners_text),
+    contact_heading: text(item.contact_heading),
+    contact_subtext: text(item.contact_subtext),
+    contact_vorteil1_titel: text(item.contact_vorteil1_titel),
+    contact_vorteil1_text: text(item.contact_vorteil1_text),
+    contact_vorteil2_titel: text(item.contact_vorteil2_titel),
+    contact_vorteil2_text: text(item.contact_vorteil2_text),
     foto_hero: bildAusDirectus(item.foto_hero as DirectusDatei, DIRECTUS_URL, 'foto_hero'),
     foto_ueber_uns: bildAusDirectus(
       item.foto_ueber_uns as DirectusDatei,

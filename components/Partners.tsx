@@ -1,6 +1,8 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import type { SiteData } from '@/lib/directus';
+import { inhalt } from '@/lib/inhalt';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 
@@ -19,8 +21,11 @@ const partners = [
   },
 ];
 
-export default function Partners() {
+export default function Partners({ data }: { data: SiteData }) {
   const t = useTranslations('partners');
+  const locale = useLocale();
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [hovered, setHovered] = useState<number | null>(null);
@@ -43,7 +48,7 @@ export default function Partners() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {t('heading')}
+            {txt(data.partners_heading, 'heading')}
           </motion.h2>
           <motion.p
             className="text-[var(--text-secondary)] text-base leading-relaxed max-w-2xl"
@@ -51,7 +56,7 @@ export default function Partners() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
-            {t('text')}
+            {txt(data.partners_text, 'text')}
           </motion.p>
         </div>
 

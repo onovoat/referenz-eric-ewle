@@ -22,12 +22,12 @@ export default async function HomePage({
       <main id="main-content" className="pt-16 lg:pt-20">
         <Hero data={data} />
         <About data={data} />
-        <Services />
-        <Region />
-        <Partners />
-        <Contact />
+        <Services data={data} />
+        <Region data={data} />
+        <Partners data={data} />
+        <Contact data={data} />
       </main>
-      <Footer />
+      <Footer data={data} />
     </>
   );
 }

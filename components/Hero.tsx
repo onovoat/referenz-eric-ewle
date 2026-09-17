@@ -1,6 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { inhalt } from '@/lib/inhalt';
 import { motion } from 'framer-motion';
 import type { SiteData } from '@/lib/directus';
 import Image from 'next/image';
@@ -29,6 +30,10 @@ function TypewriterText({ text, startDelay }: { text: string; startDelay: number
 
 export default function Hero({ data }: Props) {
   const t = useTranslations('hero');
+  const locale = useLocale();
+  /* Deutsch aus Directus, Englisch aus dem Code. Warum: lib/inhalt.ts */
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
 
   return (
     <section
@@ -50,17 +55,19 @@ export default function Hero({ data }: Props) {
           className="max-w-xl"
         >
           <span className="inline-block text-[var(--teal-700)] text-xs font-semibold tracking-[0.2em] uppercase mb-6 border-b border-[var(--teal-400)] pb-1">
-            {t('tagline')}
+            {txt(data.hero_tagline, 'tagline')}
           </span>
 
           <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-bold text-[var(--text-primary)] leading-[1.15] mb-6">
-            {t('headline')}
+            {txt(data.hero_headline, 'headline')}
             <br />
-            <span className="text-[var(--teal-800)]">{t('headline2')}</span>
+            <span className="text-[var(--teal-800)]">
+              {txt(data.hero_headline2, 'headline2')}
+            </span>
           </h1>
 
           <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-10 max-w-md">
-            {t('subline')}
+            {txt(data.hero_subline, 'subline')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-14">
@@ -162,8 +169,10 @@ export default function Hero({ data }: Props) {
         )}
 
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent pt-20 pb-7 px-8">
-          <p className="text-white font-bold text-base tracking-wide">{t('photo_name')}</p>
-          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">{t('photo_role')}</p>
+          <p className="text-white font-bold text-base tracking-wide">{data.firmenname}</p>
+          <p className="text-white/70 text-sm mt-0.5 font-light tracking-wider">
+            {txt(data.hero_rolle, 'photo_role')}
+          </p>
         </div>
       </motion.div>
     </section>

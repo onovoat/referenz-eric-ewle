@@ -1,6 +1,8 @@
 'use client';
 
 import { useTranslations, useLocale } from 'next-intl';
+import type { SiteData } from '@/lib/directus';
+import { inhalt } from '@/lib/inhalt';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
@@ -14,10 +16,13 @@ declare global {
   }
 }
 
-export default function Contact() {
+export default function Contact({ data }: { data: SiteData }) {
   const t = useTranslations('contact');
   const f = useTranslations('contact.form');
   const locale = useLocale();
+  /* Deutsch aus Directus, Englisch aus dem Code. Warum: lib/inhalt.ts */
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const turnstileRef = useRef<HTMLDivElement>(null);
@@ -120,7 +125,7 @@ export default function Contact() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {t('heading')}
+                {txt(data.contact_heading, 'heading')}
               </motion.h2>
               <motion.p
                 className="text-[var(--text-secondary)] leading-relaxed mb-8"
@@ -128,7 +133,7 @@ export default function Contact() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.15 }}
               >
-                {t('subtext')}
+                {txt(data.contact_subtext, 'subtext')}
               </motion.p>
 
               <motion.div
@@ -138,8 +143,14 @@ export default function Contact() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 {[
-                  { title: t('benefit1_title'), text: t('benefit1_text') },
-                  { title: t('benefit2_title'), text: t('benefit2_text') },
+                  {
+                    title: txt(data.contact_vorteil1_titel, 'benefit1_title'),
+                    text: txt(data.contact_vorteil1_text, 'benefit1_text'),
+                  },
+                  {
+                    title: txt(data.contact_vorteil2_titel, 'benefit2_title'),
+                    text: txt(data.contact_vorteil2_text, 'benefit2_text'),
+                  },
                 ].map((b) => (
                   <div key={b.title} className="flex gap-3">
                     <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[var(--teal-800)] flex items-center justify-center mt-0.5">

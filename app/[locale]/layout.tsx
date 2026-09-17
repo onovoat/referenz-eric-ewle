@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import '../globals.css';
 import CookieBanner from '@/components/CookieBanner';
 import StickyWidgets from '@/components/StickyWidgets';
+import { getSiteData, getLegalData, type SiteData, type LegalData } from '@/lib/directus';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -70,24 +71,35 @@ export async function generateMetadata({
   };
 }
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'Eric Ewle Personalberatung',
-  description: 'IT Personalberatung und Recruiting in OÖ, Wien und Salzburg',
-  url: 'https://ericewle.at',
-  telephone: '+43 676 706 8736',
-  email: 'office@ericewle.at',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Dresdnerstrasse 117',
-    addressLocality: 'Wien',
-    postalCode: '1020',
-    addressCountry: 'AT',
-  },
-  areaServed: ['AT-4', 'AT-9', 'AT-5'],
-  sameAs: ['https://www.linkedin.com/in/eric-ewle-5946831a1'],
-};
+/**
+ * Strukturierte Daten aus den Stammdaten in Directus.
+ *
+ * Vorher standen Telefonnummer, E-Mail und Anschrift hier fest im Code, ein
+ * zweites Mal im Footer und ein drittes Mal im Sticky-Widget. Aendert der Kunde
+ * seine Nummer in Directus, aktualisierte sich nur die Datenschutzerklaerung,
+ * und Google bekam weiter die alte: ein Widerspruch zwischen Rechtstext,
+ * sichtbarer Seite und Suchmaschine.
+ */
+function baueJsonLd(data: SiteData, legal: LegalData | null) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Eric Ewle Personalberatung',
+    description: 'IT Personalberatung und Recruiting in OÖ, Wien und Salzburg',
+    url: 'https://ericewle.at',
+    telephone: data.telefon,
+    email: data.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: legal?.strasse_hausnummer ?? 'Dresdnerstrasse 117',
+      addressLocality: legal?.ort ?? 'Wien',
+      postalCode: legal?.plz ?? '1020',
+      addressCountry: 'AT',
+    },
+    areaServed: ['AT-4', 'AT-9', 'AT-5'],
+    sameAs: [data.linkedin],
+  };
+}
 
 export default async function LocaleLayout({
   children,
@@ -103,6 +115,10 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  /* Stammdaten fuer die strukturierten Daten und das Sticky-Widget. */
+  const data = await getSiteData();
+  const legal = await getLegalData();
+  const jsonLd = baueJsonLd(data, legal);
 
   return (
     <html lang={locale} className={`${inter.variable} ${playfair.variable} scroll-smooth`}>
@@ -122,7 +138,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
           <CookieBanner />
-          <StickyWidgets />
+          <StickyWidgets data={data} />
         </NextIntlClientProvider>
       </body>
     </html>

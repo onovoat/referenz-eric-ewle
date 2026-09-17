@@ -1,6 +1,8 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import type { SiteData } from '@/lib/directus';
+import { inhalt, inhaltListe } from '@/lib/inhalt';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -16,12 +18,22 @@ const icons = [
   </svg>,
 ];
 
-export default function Services() {
+export default function Services({ data }: { data: SiteData }) {
   const t = useTranslations('services');
+  const locale = useLocale();
+  /* Deutsch aus Directus, Englisch aus dem Code. Warum: lib/inhalt.ts */
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  const items = t.raw('items') as Array<{ title: string; description: string }>;
+  /* Die Leistungen liegen in Directus als Liste aus Titel und Beschreibung.
+     Ist dort nichts gepflegt, gilt die Fassung aus messages. */
+  const ausCode = t.raw('items') as Array<{ title: string; description: string }>;
+  const items =
+    locale === 'de' && data.services_items?.length
+      ? data.services_items.map((x) => ({ title: x.titel, description: x.beschreibung }))
+      : ausCode;
 
   return (
     <section id="services" className="py-24 lg:py-32 bg-[var(--bg-alt)]">
@@ -43,7 +55,7 @@ export default function Services() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {t('heading')}
+            {txt(data.services_heading, 'heading')}
           </motion.h2>
         </div>
 

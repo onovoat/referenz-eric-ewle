@@ -7,6 +7,7 @@ import { useRef } from 'react';
 import type { SiteData } from '@/lib/directus';
 import Image from 'next/image';
 import KiHinweis from '@/components/KiHinweis';
+import { inhalt, inhaltListe } from '@/lib/inhalt';
 
 type Props = {
   data: SiteData;
@@ -32,11 +33,17 @@ export default function About({ data }: Props) {
   const locale = useLocale();
 
   // For EN, CMS content is in German — fall back to translation strings
-  const text1 = locale === 'de' ? (data.ueber_uns_text || t('text1')) : t('text1');
-  const text2 = locale === 'de' ? (data.ueber_uns_text2 || t('text2')) : t('text2');
-  const mission = locale === 'de' ? (data.mission || t('mission')) : t('mission');
+  /* Deutsch aus Directus, Englisch aus dem Code. Warum: lib/inhalt.ts */
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
 
-  const tags = [t('tag1'), t('tag2'), t('tag3'), t('tag4')];
+  const text1 = txt(data.ueber_uns_text, 'text1');
+  const text2 = txt(data.ueber_uns_text2, 'text2');
+  const mission = txt(data.mission, 'mission');
+
+  const tags = inhaltListe(locale, data.about_tags, [
+    t('tag1'), t('tag2'), t('tag3'), t('tag4'),
+  ]);
 
   return (
     <section id="about" className="py-24 lg:py-32 bg-white">
@@ -48,7 +55,7 @@ export default function About({ data }: Props) {
                 {t('label')}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mt-5 mb-6 leading-tight">
-                {t('heading')}
+                {txt(data.about_heading, 'heading')}
               </h2>
             </AnimatedSection>
 

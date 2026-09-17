@@ -1,11 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import type { SiteData } from '@/lib/directus';
+import { telHref } from '@/lib/inhalt';
 
-const widgets = [
+/* Die Ziele haengen an den Stammdaten aus Directus. Vorher standen
+   Telefonnummer, E-Mail und LinkedIn hier fest im Code, ein zweites Mal im
+   Footer und ein drittes Mal in den strukturierten Daten. Aendert der Kunde
+   seine Nummer, muss sie an einer Stelle gepflegt werden. */
+const widgetsBauen = (data: SiteData) => [
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/eric-ewle-5946831a1',
+    href: data.linkedin,
     target: '_blank',
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -15,7 +21,7 @@ const widgets = [
   },
   {
     label: 'E-Mail schreiben',
-    href: 'mailto:office@ericewle.at',
+    href: `mailto:${data.email}`,
     target: '_self',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -25,7 +31,7 @@ const widgets = [
   },
   {
     label: 'Anrufen',
-    href: 'tel:+436767068736',
+    href: telHref(data.telefon),
     target: '_self',
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -35,7 +41,9 @@ const widgets = [
   },
 ];
 
-export default function StickyWidgets() {
+export default function StickyWidgets({ data }: { data: SiteData }) {
+  const widgets = widgetsBauen(data);
+
   return (
     <div
       className="fixed bottom-6 right-4 sm:right-6 z-30 flex flex-col gap-2"

@@ -1,12 +1,20 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import type { SiteData } from '@/lib/directus';
+import { inhalt, inhaltListe } from '@/lib/inhalt';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import AustriaMap from './AustriaMap';
 
-export default function Region() {
+export default function Region({ data }: { data: SiteData }) {
   const t = useTranslations('region');
+  const locale = useLocale();
+  const txt = (feld: string | null, schluessel: string) =>
+    inhalt(locale, feld, t(schluessel));
+  const badges = inhaltListe(locale, data.region_badges, [
+    t('badge1'), t('badge2'), t('badge3'),
+  ]);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
@@ -30,7 +38,7 @@ export default function Region() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              {t('heading')}
+              {txt(data.region_heading, 'heading')}
             </motion.h2>
             <motion.p
               className="text-gray-300 leading-relaxed text-base sm:text-lg mb-8"
@@ -38,7 +46,7 @@ export default function Region() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              {t('text')}
+              {txt(data.region_text, 'text')}
             </motion.p>
             <motion.div
               className="flex flex-wrap gap-3"
