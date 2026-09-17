@@ -4,10 +4,9 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 type Props = {
-  locale: string;
 };
 
-export default function Footer({ locale }: Props) {
+export default function Footer() {
   const t = useTranslations('footer');
 
   return (
@@ -52,18 +51,13 @@ export default function Footer({ locale }: Props) {
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-3">Links</p>
             <ul className="flex flex-col gap-2">
               <li>
-                <Link href={`/${locale}/impressum`} className="text-sm text-gray-300 hover:text-white transition-colors">
+                <Link href="/impressum" className="text-sm text-gray-300 hover:text-white transition-colors">
                   {t('links.impressum')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/datenschutz`} className="text-sm text-gray-300 hover:text-white transition-colors">
+                <Link href="/datenschutz" className="text-sm text-gray-300 hover:text-white transition-colors">
                   {t('links.datenschutz')}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/agb`} className="text-sm text-gray-300 hover:text-white transition-colors">
-                  {t('links.agb')}
                 </Link>
               </li>
               <li>

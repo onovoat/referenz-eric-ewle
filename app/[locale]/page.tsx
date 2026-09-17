@@ -27,7 +27,7 @@ export default async function HomePage({
         <Partners />
         <Contact />
       </main>
-      <Footer locale={locale} />
+      <Footer />
     </>
   );
 }

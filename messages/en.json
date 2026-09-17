@@ -105,18 +105,10 @@
     "links": {
       "impressum": "Imprint",
       "datenschutz": "Privacy Policy",
-      "agb": "Terms & Conditions",
       "cookie": "Cookie Settings"
     },
     "credit": "Website by onovo.at",
     "rights": "All rights reserved."
-  },
-  "legal": {
-    "placeholder": "This is a placeholder document for demo purposes. The legally binding content will be finalized before this website goes live.",
-    "impressum_title": "Imprint",
-    "datenschutz_title": "Privacy Policy",
-    "agb_title": "Terms & Conditions",
-    "back": "Back to homepage"
   },
   "cookie": {
     "text": "This website uses cookies to provide you with the best possible experience.",

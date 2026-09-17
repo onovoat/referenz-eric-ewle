@@ -105,18 +105,10 @@
     "links": {
       "impressum": "Impressum",
       "datenschutz": "Datenschutz",
-      "agb": "AGB",
       "cookie": "Cookie-Einstellungen"
     },
     "credit": "Website by onovo.at",
     "rights": "Alle Rechte vorbehalten."
-  },
-  "legal": {
-    "placeholder": "Dies ist ein Platzhalter-Dokument für Demo-Zwecke. Die rechtsverbindlichen Inhalte werden vor der Live-Schaltung dieser Website final eingefügt.",
-    "impressum_title": "Impressum",
-    "datenschutz_title": "Datenschutzerklärung",
-    "agb_title": "Allgemeine Geschäftsbedingungen",
-    "back": "Zurück zur Startseite"
   },
   "cookie": {
     "text": "Diese Website verwendet Cookies, um Ihnen die bestmögliche Erfahrung zu bieten.",

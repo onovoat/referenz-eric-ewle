@@ -1,5 +1,23 @@
-import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
+import Rechtsseite from '@/components/Rechtsseite';
+import { getLegalData } from '@/lib/directus';
+import { baueImpressum } from '@/lib/legal';
+
+/* Der Kunde pflegt seine Angaben in Directus und soll die Änderung sehen, ohne
+   dass jemand deployt. Die Seite wird deshalb statisch erzeugt und höchstens
+   60 Sekunden alt ausgeliefert. */
+export const revalidate = 60;
+
+/* Rechtsseiten gehören nie in den Suchindex: Sie enthalten ausschließlich
+   Pflichtangaben und keine Inhalte, die jemand über Google suchen würde. */
+export const metadata: Metadata = {
+  title: 'Impressum',
+  description:
+    'Impressum und Offenlegung gemäß § 5 ECG und § 25 Mediengesetz für die Website von Eric Ewle.',
+  alternates: { canonical: '/impressum' },
+  robots: { index: false, follow: true },
+};
 
 export default async function ImpressumPage({
   params,
@@ -7,35 +25,11 @@ export default async function ImpressumPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations('legal');
 
-  return (
-    <main className="min-h-screen bg-[var(--bg-alt)] py-24">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6">
-        <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-8">{t('impressum_title')}</h1>
-        <div className="bg-white rounded-2xl border border-[var(--border)] p-8 shadow-sm">
-          <p className="text-[var(--text-secondary)] leading-relaxed mb-6">{t('placeholder')}</p>
-          <a
-            href="/legal-placeholders/impressum.pdf"
-            className="inline-flex items-center gap-2 text-sm text-[var(--teal-700)] hover:text-[var(--teal-600)] font-medium underline underline-offset-2"
-            aria-label="Impressum als PDF herunterladen"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
-            Impressum.pdf
-          </a>
-        </div>
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center gap-2 mt-6 text-sm text-[var(--text-secondary)] hover:text-[var(--teal-700)] transition-colors"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          {t('back')}
-        </Link>
-      </div>
-    </main>
-  );
+  /* Die Rechtsvorlagen liegen nur auf Deutsch vor. Eine englische Fassung
+     vorzugeben wäre irreführend, deshalb führt die englische Route auf die
+     deutsche Seite. */
+  if (locale === 'en') redirect('/impressum');
+
+  return <Rechtsseite titel="Impressum" ergebnis={baueImpressum(await getLegalData())} />;
 }

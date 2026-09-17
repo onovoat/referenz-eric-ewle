@@ -1,6 +1,7 @@
 const DIRECTUS_URL = process.env.DIRECTUS_URL!;
 const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN!;
 
+/** Inhaltsfelder, die die sichtbare Website füllt. */
 export type SiteData = {
   firmenname: string;
   slogan: string;
@@ -9,10 +10,59 @@ export type SiteData = {
   mission: string;
   telefon: string;
   email: string;
+  /**
+   * Einzeilige Anschrift für die Darstellung und für {{ADRESSE}} in der
+   * Datenschutzerklärung. Abgeleitet aus strasse_hausnummer, plz und ort, damit
+   * es keine zweite, konkurrierende Wahrheit gibt: Ein eigenes Directus-Feld
+   * daneben würde beim ersten Umzug auseinanderlaufen, und die falsche Fassung
+   * stünde dann im Rechtstext.
+   */
   adresse: string;
   linkedin: string;
   foto_hero: string | null;
   foto_ueber_uns: string | null;
+};
+
+/**
+ * Felder für Impressum und Datenschutzerklärung.
+ *
+ * Getrennt von SiteData, weil sie nur die Rechtsseiten betreffen und der Kunde
+ * sie eigenverantwortlich pflegt. Alles optional: Fehlt eine Pflichtangabe,
+ * liefert lib/legal.ts den Text bewusst nicht aus, statt ihn lückenhaft
+ * anzuzeigen.
+ */
+export type LegalData = {
+  firmenname: string | null;
+  rechtsform: string | null;
+  strasse_hausnummer: string | null;
+  plz: string | null;
+  ort: string | null;
+  email: string | null;
+  telefon: string | null;
+  vertretungsberechtigte_person: string | null;
+  uid: string | null;
+  firmenbuchnummer: string | null;
+  firmenbuchgericht: string | null;
+  taetigkeit: string | null;
+  zweck_des_mediums: string | null;
+  grundlegende_richtung: string | null;
+  zielgruppe: string | null;
+  wirtschaftskammer: string | null;
+  fachgruppe: string | null;
+  gewerbebehoerde: string | null;
+  zvr_zahl: string | null;
+  berufsrecht: string | null;
+  domain: string | null;
+  // Dienste-Schalter: steuern, welche Bausteine der Datenschutzerklärung gelten.
+  cloudflare_proxy: boolean;
+  turnstile: boolean;
+  reichweitenmessung: string | null;
+  google_analytics: boolean;
+  newsletter_tool: string | null;
+  buchungstool: string | null;
+  google_rezensionen: boolean;
+  standortkarte: boolean;
+  whatsapp_link: boolean;
 };
 
 const fallback: SiteData = {
@@ -32,32 +82,117 @@ const fallback: SiteData = {
   foto_ueber_uns: null,
 };
 
-export async function getSiteData(): Promise<SiteData> {
+/** Baut die einzeilige Anschrift. Leere Bestandteile entfallen ohne Rückstand. */
+function anschrift(
+  strasse: string | null | undefined,
+  plz: string | null | undefined,
+  ort: string | null | undefined
+): string {
+  const stadt = [plz, ort].filter((t) => t?.trim()).join(' ');
+  return [strasse?.trim(), stadt].filter(Boolean).join(', ');
+}
+
+type DirectusItem = Record<string, unknown>;
+
+async function ladeItem(): Promise<DirectusItem | null> {
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/eric_ewle?limit=1`, {
       headers: { Authorization: `Bearer ${DIRECTUS_TOKEN}` },
+      /* Kurze Frist, damit Änderungen des Kunden ohne Deploy sichtbar werden.
+         Betrifft auch die Rechtsseiten, siehe revalidate in den page.tsx. */
       next: { revalidate: 60 },
     });
-    if (!res.ok) return fallback;
+    if (!res.ok) return null;
     const json = await res.json();
-    const item = json.data?.[0];
-    if (!item) return fallback;
-    return {
-      firmenname: item.firmenname || fallback.firmenname,
-      slogan: item.slogan || fallback.slogan,
-      ueber_uns_text: item.ueber_uns_text || fallback.ueber_uns_text,
-      ueber_uns_text2: item.ueber_uns_text2 || fallback.ueber_uns_text2,
-      mission: item.mission || fallback.mission,
-      telefon: item.telefon || fallback.telefon,
-      email: item.email || fallback.email,
-      adresse: item.adresse || fallback.adresse,
-      linkedin: item.linkedin || fallback.linkedin,
-      foto_hero: item.foto_hero ? `${DIRECTUS_URL}/assets/${item.foto_hero}` : null,
-      foto_ueber_uns: item.foto_ueber_uns ? `${DIRECTUS_URL}/assets/${item.foto_ueber_uns}` : null,
-    };
+    return (json.data?.[0] as DirectusItem) ?? null;
   } catch {
-    return fallback;
+    return null;
   }
+}
+
+/** Text oder null. Leere Zeichenketten aus Directus gelten als nicht gesetzt. */
+function text(wert: unknown): string | null {
+  return typeof wert === 'string' && wert.trim() !== '' ? wert : null;
+}
+
+export async function getSiteData(): Promise<SiteData> {
+  const item = await ladeItem();
+  if (!item) return fallback;
+
+  const abgeleitet = anschrift(
+    text(item.strasse_hausnummer),
+    text(item.plz),
+    text(item.ort)
+  );
+
+  return {
+    firmenname: text(item.firmenname) ?? fallback.firmenname,
+    slogan: text(item.slogan) ?? fallback.slogan,
+    ueber_uns_text: text(item.ueber_uns_text) ?? fallback.ueber_uns_text,
+    ueber_uns_text2: text(item.ueber_uns_text2) ?? fallback.ueber_uns_text2,
+    mission: text(item.mission) ?? fallback.mission,
+    telefon: text(item.telefon) ?? fallback.telefon,
+    email: text(item.email) ?? fallback.email,
+    adresse: abgeleitet || fallback.adresse,
+    linkedin: text(item.linkedin) ?? fallback.linkedin,
+    foto_hero: item.foto_hero ? `${DIRECTUS_URL}/assets/${item.foto_hero}` : null,
+    foto_ueber_uns: item.foto_ueber_uns
+      ? `${DIRECTUS_URL}/assets/${item.foto_ueber_uns}`
+      : null,
+  };
+}
+
+/**
+ * Daten für die Rechtsseiten.
+ *
+ * Anders als getSiteData gibt es hier bewusst keine hinterlegten Ersatzwerte.
+ * Ein Impressum aus einem Fallback wäre eine Behauptung über einen anderen
+ * Rechtsträger; fehlen die Angaben, muss die Seite das zeigen und nicht
+ * überdecken.
+ */
+export async function getLegalData(): Promise<LegalData | null> {
+  const item = await ladeItem();
+  if (!item) return null;
+
+  const flag = (wert: unknown) => wert === true;
+
+  return {
+    firmenname: text(item.firmenname),
+    rechtsform: text(item.rechtsform),
+    strasse_hausnummer: text(item.strasse_hausnummer),
+    plz: text(item.plz),
+    ort: text(item.ort),
+    email: text(item.email),
+    telefon: text(item.telefon),
+    vertretungsberechtigte_person: text(item.vertretungsberechtigte_person),
+    uid: text(item.uid),
+    firmenbuchnummer: text(item.firmenbuchnummer),
+    firmenbuchgericht: text(item.firmenbuchgericht),
+    taetigkeit: text(item.taetigkeit),
+    zweck_des_mediums: text(item.zweck_des_mediums),
+    grundlegende_richtung: text(item.grundlegende_richtung),
+    zielgruppe: text(item.zielgruppe),
+    wirtschaftskammer: text(item.wirtschaftskammer),
+    fachgruppe: text(item.fachgruppe),
+    gewerbebehoerde: text(item.gewerbebehoerde),
+    zvr_zahl: text(item.zvr_zahl),
+    berufsrecht: text(item.berufsrecht),
+    domain: text(item.domain),
+    cloudflare_proxy: flag(item.cloudflare_proxy),
+    turnstile: flag(item.turnstile),
+    reichweitenmessung: text(item.reichweitenmessung),
+    google_analytics: flag(item.google_analytics),
+    newsletter_tool: text(item.newsletter_tool),
+    buchungstool: text(item.buchungstool),
+    google_rezensionen: flag(item.google_rezensionen),
+    standortkarte: flag(item.standortkarte),
+    whatsapp_link: flag(item.whatsapp_link),
+  };
+}
+
+/** Einzeilige Anschrift aus den Rechtsfeldern, für {{ADRESSE}}. */
+export function legalAnschrift(d: LegalData): string {
+  return anschrift(d.strasse_hausnummer, d.plz, d.ort);
 }
 
 export function getAssetUrl(id: string) {
