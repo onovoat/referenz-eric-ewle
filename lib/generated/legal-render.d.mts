@@ -1,8 +1,11 @@
 /**
- * Typen für die aus onovo-legal kopierte render.mjs.
+ * Typen für render.mjs.
+ *
  * Von Hand gepflegt: Die Quelle ist reines JavaScript ohne Typen, und eine
  * zweite Kopie der Signaturen ist billiger als ein Build-Schritt, der sie
- * erzeugt. Bei Signaturänderungen in onovo-legal hier nachziehen.
+ * erzeugt. Sie liegt seit v2026.9.1 hier statt in jedem Projekt, damit sie bei
+ * einer Signaturänderung an genau einer Stelle nachgezogen wird.
+ * legal-sync.mjs kopiert sie mit.
  */
 
 export type FeldKatalog = {

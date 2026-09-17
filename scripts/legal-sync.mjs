@@ -75,18 +75,41 @@ export const felderKatalog = ${JSON.stringify(katalog, null, 2)} as const;
 mkdirSync(join(projekt, "lib", "generated"), { recursive: true });
 writeFileSync(join(projekt, "lib", "generated", "legal.ts"), `${kopf}\n${teile.join("\n\n")}\n`);
 
-/* Der Renderer wandert mit. Die Blocklogik gehoert zum Dokument, nicht zur
-   Seite: Waere sie hier nachgebaut, liefe sie beim naechsten Wortlautwechsel
-   gegen die Vorlage. Kopieren ist der einzige Weg, solange onovo-legal privat
-   ist und der Coolify-Build keinen GitHub-Token hat. */
-const renderer = readFileSync(join(quelle, "render.mjs"), "utf8");
-writeFileSync(
-  join(projekt, "lib", "generated", "legal-render.mjs"),
-  `// Kopie aus onovo-legal ${version}, nicht von Hand aendern.\n` +
-    `// Aenderungen gehoeren in onovo-legal/render.mjs, danach \`npm run legal:sync\`.\n\n` +
-    renderer,
-);
+/* Renderer, Blocklogik und die Typen wandern mit. Beides gehoert zum Dokument,
+   nicht zur Seite: Waere es hier nachgebaut, liefe es beim naechsten
+   Wortlautwechsel gegen die Vorlage, und zwar still. Kopieren ist der einzige
+   Weg, solange onovo-legal privat ist und der Coolify-Build keinen
+   GitHub-Token hat. */
+/* Die Typdateien landen als .d.mts, nicht als .d.ts. Bei
+   moduleResolution "bundler" sucht TypeScript zu einem Import von
+   "./x.mjs" die Deklaration "./x.d.mts". Eine daneben liegende .d.ts wird
+   ignoriert, und mit allowJs leitet TypeScript die Typen stattdessen aus dem
+   JavaScript ab: `vollstaendig` wird dann zu `boolean` statt zu `true | false`
+   und das Ergebnis laesst sich nicht mehr unterscheiden. */
+const KOPIEN = [
+  { von: "render.mjs", nach: "legal-render.mjs" },
+  { von: "render.d.ts", nach: "legal-render.d.mts" },
+  { von: "kunden-logik.mjs", nach: "kunden-logik.mjs" },
+  { von: "kunden-logik.d.ts", nach: "kunden-logik.d.mts" },
+];
+
+for (const { von, nach } of KOPIEN) {
+  let inhalt = readFileSync(join(quelle, von), "utf8");
+
+  /* In onovo-legal heisst der Renderer render.mjs, hier legal-render.mjs.
+     kunden-logik importiert ihn, der Pfad muss also mitgezogen werden. */
+  inhalt = inhalt
+    .replaceAll('from "./render.mjs"', 'from "./legal-render.mjs"')
+    .replaceAll("from './render'", "from './legal-render.mjs'");
+
+  const kommentar = nach.endsWith(".d.ts") || nach.endsWith(".mjs")
+    ? `// Kopie aus onovo-legal ${version}, nicht von Hand aendern.\n` +
+      `// Aenderungen gehoeren in onovo-legal/${von}, danach \`npm run legal:sync\`.\n\n`
+    : "";
+
+  writeFileSync(join(projekt, "lib", "generated", nach), kommentar + inhalt);
+}
 
 console.log(
-  `Rechtstexte aus onovo-legal ${version} uebernommen: ${DOKUMENTE.length} Vorlagen plus Felderkatalog.`,
+  `Rechtstexte aus onovo-legal ${version} uebernommen: ${DOKUMENTE.length} Vorlagen, Felderkatalog und ${KOPIEN.length} Kopien (Renderer, Blocklogik, Typen).`,
 );

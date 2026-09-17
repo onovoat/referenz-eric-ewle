@@ -190,11 +190,6 @@ export async function getLegalData(): Promise<LegalData | null> {
   };
 }
 
-/** Einzeilige Anschrift aus den Rechtsfeldern, für {{ADRESSE}}. */
-export function legalAnschrift(d: LegalData): string {
-  return anschrift(d.strasse_hausnummer, d.plz, d.ort);
-}
-
 export function getAssetUrl(id: string) {
   return `${DIRECTUS_URL}/assets/${id}`;
 }
