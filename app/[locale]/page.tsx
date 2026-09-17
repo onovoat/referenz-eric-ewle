@@ -6,7 +6,7 @@ import Region from '@/components/Region';
 import Partners from '@/components/Partners';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import { getSiteData } from '@/lib/directus';
+import { getSiteData, ohneInhalte } from '@/lib/directus';
 
 export default async function HomePage({
   params,
@@ -14,7 +14,11 @@ export default async function HomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const data = await getSiteData();
+  const geladen = await getSiteData();
+  /* Auf Englisch gewinnt immer messages/en.json, die deutschen Inhaltsfelder
+     werden dort nie gelesen. Sie gar nicht mitzugeben haelt die englische
+     Seite frei von Text, den sie nicht braucht. Siehe ohneInhalte(). */
+  const data = locale === 'de' ? geladen : ohneInhalte(geladen);
 
   return (
     <>

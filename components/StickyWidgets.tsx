@@ -8,7 +8,11 @@ import { telHref } from '@/lib/inhalt';
    Telefonnummer, E-Mail und LinkedIn hier fest im Code, ein zweites Mal im
    Footer und ein drittes Mal in den strukturierten Daten. Aendert der Kunde
    seine Nummer, muss sie an einer Stelle gepflegt werden. */
-const widgetsBauen = (data: SiteData) => [
+/* Nur die drei Stammdatenfelder, nicht der ganze Datensatz: Die Props
+   landen in der ausgelieferten Seite, siehe ohneInhalte() in lib/directus. */
+type Stammdaten = Pick<SiteData, 'telefon' | 'email' | 'linkedin'>;
+
+const widgetsBauen = (data: Stammdaten) => [
   {
     label: 'LinkedIn',
     href: data.linkedin,
@@ -41,7 +45,7 @@ const widgetsBauen = (data: SiteData) => [
   },
 ];
 
-export default function StickyWidgets({ data }: { data: SiteData }) {
+export default function StickyWidgets({ data }: { data: Stammdaten }) {
   const widgets = widgetsBauen(data);
 
   return (

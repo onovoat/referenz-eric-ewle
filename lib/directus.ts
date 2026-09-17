@@ -310,6 +310,46 @@ export async function getLegalData(): Promise<LegalData | null> {
   };
 }
 
+/**
+ * Entfernt die deutschen Inhaltsfelder und behält nur die Stammdaten.
+ *
+ * Next.js serialisiert die Props von Client-Komponenten in die ausgelieferte
+ * Seite. Wird `data` unverändert übergeben, landen sämtliche deutschen Texte
+ * auch in der englischen Fassung, wo sie nie gelesen werden: Auf Englisch
+ * gewinnt immer `messages/en.json`. Das ist nicht falsch, aber unnötiger
+ * Ballast in jeder englischen Seite.
+ *
+ * Die Stammdaten bleiben, sie gelten in beiden Sprachen.
+ */
+export function ohneInhalte(data: SiteData): SiteData {
+  return {
+    ...data,
+    ueber_uns_text: '',
+    ueber_uns_text2: '',
+    mission: '',
+    hero_headline: null,
+    hero_headline2: null,
+    hero_subline: null,
+    hero_tagline: null,
+    hero_rolle: null,
+    about_heading: null,
+    about_tags: null,
+    services_heading: null,
+    services_items: null,
+    region_heading: null,
+    region_text: null,
+    region_badges: null,
+    partners_heading: null,
+    partners_text: null,
+    contact_heading: null,
+    contact_subtext: null,
+    contact_vorteil1_titel: null,
+    contact_vorteil1_text: null,
+    contact_vorteil2_titel: null,
+    contact_vorteil2_text: null,
+  };
+}
+
 export function getAssetUrl(id: string) {
   return `${DIRECTUS_URL}/assets/${id}`;
 }

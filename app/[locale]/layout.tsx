@@ -138,7 +138,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
           <CookieBanner />
-          <StickyWidgets data={data} />
+          <StickyWidgets
+            data={{ telefon: data.telefon, email: data.email, linkedin: data.linkedin }}
+          />
         </NextIntlClientProvider>
       </body>
     </html>
