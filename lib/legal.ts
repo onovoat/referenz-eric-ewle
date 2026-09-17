@@ -90,6 +90,41 @@ function impressumPlatzhalter(d: LegalData) {
   };
 }
 
+/**
+ * Felder, die erst durch einen aktiven Block zur Pflicht werden.
+ *
+ * Im Katalog stehen sie als optional, und das ist richtig: Ein Verein hat keine
+ * Fachgruppe, ein Kleinunternehmer keine UID. Sobald der zugehörige Block aber
+ * gilt, stehen ihre Platzhalter im Text. Der Renderer ersetzt leere optionale
+ * Platzhalter durch eine leere Zeichenkette, aus „Mitglied der
+ * {{WIRTSCHAFTSKAMMER}}, Fachgruppe {{FACHGRUPPE}}." würde dann „Mitglied der ,
+ * Fachgruppe ." auf einer Rechtsseite.
+ *
+ * Deshalb werden sie hier nachgemeldet: Die Seite zeigt dann denselben
+ * ehrlichen Hinweis wie bei jeder anderen fehlenden Pflichtangabe, statt einen
+ * halben Satz auszuliefern.
+ */
+function bedingtePflichtfelder(
+  d: LegalData,
+  bloecke: ReturnType<typeof impressumBloecke>
+): string[] {
+  const fehlt: string[] = [];
+
+  if (bloecke.gewerbe) {
+    if (!gesetzt(d.wirtschaftskammer)) fehlt.push('WIRTSCHAFTSKAMMER');
+    if (!gesetzt(d.fachgruppe)) fehlt.push('FACHGRUPPE');
+    if (!gesetzt(d.gewerbebehoerde)) fehlt.push('GEWERBEBEHOERDE');
+  }
+  if (bloecke.firmenbuch) {
+    if (!gesetzt(d.firmenbuchnummer)) fehlt.push('FIRMENBUCHNUMMER');
+    if (!gesetzt(d.firmenbuchgericht)) fehlt.push('FIRMENBUCHGERICHT');
+  }
+  if (bloecke.zvr && !gesetzt(d.zvr_zahl)) fehlt.push('ZVR_ZAHL');
+  if (bloecke.berufsrecht && !gesetzt(d.berufsrecht)) fehlt.push('BERUFSRECHT');
+
+  return fehlt;
+}
+
 export function baueImpressum(d: LegalData | null): LegalErgebnis {
   if (!d) return { vollstaendig: false, fehlend: ['DIRECTUS'] };
 
@@ -97,19 +132,24 @@ export function baueImpressum(d: LegalData | null): LegalErgebnis {
      Blöcke. Ohne sie wären Gewerbe-, Firmenbuch- und Berufsrechtsblock geraten,
      deshalb wird sie hier eigens geprüft. */
   const rechtsformFehlt = !gesetzt(d.rechtsform);
+  const bloecke = impressumBloecke(d);
 
   const { markdown, fehlend } = renderLegalLaufzeit(
     impressumVorlage,
     impressumPlatzhalter(d),
     felderKatalog,
-    impressumBloecke(d),
+    bloecke,
     /* Ohne Angabe die vorsichtigere Variante: Die B2C-Formulierung ist auch
        gegenüber Unternehmern unschädlich, umgekehrt wäre die B2B-Fassung bei
        Verbrauchergeschäften schlicht unzutreffend. */
     { streitbeilegung: d.zielgruppe === 'b2b' ? 'unternehmer' : 'verbraucher' }
   );
 
-  const alle = rechtsformFehlt ? ['RECHTSFORM', ...fehlend] : fehlend;
+  const alle = [
+    ...(rechtsformFehlt ? ['RECHTSFORM'] : []),
+    ...fehlend,
+    ...bedingtePflichtfelder(d, bloecke),
+  ];
   if (markdown === null || alle.length) {
     return { vollstaendig: false, fehlend: alle };
   }
@@ -188,4 +228,11 @@ export const FELD_LABEL: Record<string, string> = {
   TAETIGKEIT: 'Unternehmensgegenstand',
   ZWECK_DES_MEDIUMS: 'Zweck des Mediums',
   GRUNDLEGENDE_RICHTUNG: 'Grundlegende Richtung',
+  WIRTSCHAFTSKAMMER: 'Wirtschaftskammer (Pflicht bei Gewerbe)',
+  FACHGRUPPE: 'Fachgruppe (Pflicht bei Gewerbe)',
+  GEWERBEBEHOERDE: 'Gewerbebehörde (Pflicht bei Gewerbe)',
+  FIRMENBUCHNUMMER: 'Firmenbuchnummer (Pflicht bei eingetragener Rechtsform)',
+  FIRMENBUCHGERICHT: 'Firmenbuchgericht (Pflicht bei eingetragener Rechtsform)',
+  ZVR_ZAHL: 'ZVR-Zahl (Pflicht bei Vereinen)',
+  BERUFSRECHT: 'Berufsrechtliche Angaben (Pflicht bei freien Berufen)',
 };
