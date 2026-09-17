@@ -1,3 +1,5 @@
+import { bildAusDirectus, dateiFelder, type Bild, type DirectusDatei } from './bild';
+
 const DIRECTUS_URL = process.env.DIRECTUS_URL!;
 const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN!;
 
@@ -19,8 +21,13 @@ export type SiteData = {
    */
   adresse: string;
   linkedin: string;
-  foto_hero: string | null;
-  foto_ueber_uns: string | null;
+  /**
+   * Bilder tragen ihren Alt-Text und das KI-Kennzeichen mit, beides kommt aus
+   * der Directus-Mediathek. Vorher waren das reine URL-Strings und der
+   * Alt-Text stand fest in der Komponente, siehe lib/bild.ts.
+   */
+  foto_hero: Bild | null;
+  foto_ueber_uns: Bild | null;
 };
 
 /**
@@ -78,6 +85,9 @@ const fallback: SiteData = {
   email: 'office@ericewle.at',
   adresse: 'Dresdnerstrasse 117, 1020 Wien',
   linkedin: 'https://www.linkedin.com/in/eric-ewle-5946831a1',
+  /* Kein Ersatzbild: Ohne Directus gibt es auch keinen Alt-Text, und ein Bild
+     ohne Beschreibung ist fuer blinde Besucher schlechter als die
+     Platzhalterflaeche, die die Komponenten dann zeigen. */
   foto_hero: null,
   foto_ueber_uns: null,
 };
@@ -94,9 +104,17 @@ function anschrift(
 
 type DirectusItem = Record<string, unknown>;
 
+/* Ohne die verschachtelten Datei-Felder liefert die API nur die UUID. `*`
+   allein reicht dafuer nicht, die Relation muss ausdruecklich aufgeloest
+   werden. */
+const ABFRAGE = [
+  'limit=1',
+  `fields=*,${dateiFelder('foto_hero')},${dateiFelder('foto_ueber_uns')}`,
+].join('&');
+
 async function ladeItem(): Promise<DirectusItem | null> {
   try {
-    const res = await fetch(`${DIRECTUS_URL}/items/eric_ewle?limit=1`, {
+    const res = await fetch(`${DIRECTUS_URL}/items/eric_ewle?${ABFRAGE}`, {
       headers: { Authorization: `Bearer ${DIRECTUS_TOKEN}` },
       /* Kurze Frist, damit Änderungen des Kunden ohne Deploy sichtbar werden.
          Betrifft auch die Rechtsseiten, siehe revalidate in den page.tsx. */
@@ -135,10 +153,12 @@ export async function getSiteData(): Promise<SiteData> {
     email: text(item.email) ?? fallback.email,
     adresse: abgeleitet || fallback.adresse,
     linkedin: text(item.linkedin) ?? fallback.linkedin,
-    foto_hero: item.foto_hero ? `${DIRECTUS_URL}/assets/${item.foto_hero}` : null,
-    foto_ueber_uns: item.foto_ueber_uns
-      ? `${DIRECTUS_URL}/assets/${item.foto_ueber_uns}`
-      : null,
+    foto_hero: bildAusDirectus(item.foto_hero as DirectusDatei, DIRECTUS_URL, 'foto_hero'),
+    foto_ueber_uns: bildAusDirectus(
+      item.foto_ueber_uns as DirectusDatei,
+      DIRECTUS_URL,
+      'foto_ueber_uns'
+    ),
   };
 }
 

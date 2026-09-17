@@ -6,6 +6,7 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import type { SiteData } from '@/lib/directus';
 import Image from 'next/image';
+import KiHinweis from '@/components/KiHinweis';
 
 type Props = {
   data: SiteData;
@@ -95,8 +96,8 @@ export default function About({ data }: Props) {
                 <div className="relative aspect-[4/5] overflow-hidden shadow-lg shadow-black/10">
                   {data.foto_ueber_uns ? (
                     <Image
-                      src={data.foto_ueber_uns}
-                      alt="Eric Ewle, Personalberater"
+                      src={data.foto_ueber_uns.url}
+                      alt={data.foto_ueber_uns.alt}
                       fill
                       className="object-cover"
                     />
@@ -109,6 +110,7 @@ export default function About({ data }: Props) {
                     </div>
                   )}
                 </div>
+                {data.foto_ueber_uns?.kiGeneriert && <KiHinweis />}
               </div>
             </AnimatedSection>
           </div>

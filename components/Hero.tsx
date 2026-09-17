@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import type { SiteData } from '@/lib/directus';
 import Image from 'next/image';
+import KiHinweis from '@/components/KiHinweis';
 
 type Props = {
   data: SiteData;
@@ -136,13 +137,16 @@ export default function Hero({ data }: Props) {
         />
 
         {data.foto_hero ? (
-          <Image
-            src={data.foto_hero}
-            alt="Eric Ewle, IT Personalberater"
-            fill
-            className="object-cover object-[72%_15%]"
-            priority
-          />
+          <>
+            <Image
+              src={data.foto_hero.url}
+              alt={data.foto_hero.alt}
+              fill
+              className="object-cover object-[72%_15%]"
+              priority
+            />
+            {data.foto_hero.kiGeneriert && <KiHinweis variante="overlay" />}
+          </>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
