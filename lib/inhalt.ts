@@ -30,7 +30,20 @@ export function inhalt(
 ): string {
   if (locale !== 'de') return ausCode;
   const wert = ausDirectus?.trim();
-  return wert ? wert : ausCode;
+  if (!wert) return ausCode;
+
+  /* Nur in der Entwicklung: Sobald in Directus ein Wert steht, hat eine
+     Aenderung an messages/de.json keine sichtbare Wirkung mehr. Ohne diesen
+     Hinweis sucht man den Fehler im Code, obwohl dort keiner ist. */
+  if (process.env.NODE_ENV !== 'production' && wert !== ausCode) {
+    console.warn(
+      `[inhalt] Directus ueberdeckt den Text aus messages/de.json.\n` +
+        `  Directus: ${wert.slice(0, 60)}\n` +
+        `  Code:     ${ausCode.slice(0, 60)}\n` +
+        `  Aenderungen am Code-Text wirken erst, wenn das Directus-Feld leer ist.`
+    );
+  }
+  return wert;
 }
 
 /** Wie `inhalt`, aber für Listen (Schlagworte, Regionen). */

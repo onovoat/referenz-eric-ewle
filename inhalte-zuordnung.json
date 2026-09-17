@@ -1,0 +1,28 @@
+{
+  "hero_headline": "hero.headline",
+  "hero_headline2": "hero.headline2",
+  "hero_subline": "hero.subline",
+  "hero_tagline": "hero.tagline",
+  "hero_rolle": "hero.photo_role",
+  "about_heading": "about.heading",
+  "ueber_uns_text": "about.text1",
+  "ueber_uns_text2": "about.text2",
+  "mission": "about.mission",
+  "about_tags": ["about.tag1", "about.tag2", "about.tag3", "about.tag4"],
+  "services_heading": "services.heading",
+  "services_items": {
+    "quelle": "services.items",
+    "abbildung": { "titel": "title", "beschreibung": "description" }
+  },
+  "region_heading": "region.heading",
+  "region_text": "region.text",
+  "region_badges": ["region.badge1", "region.badge2", "region.badge3"],
+  "partners_heading": "partners.heading",
+  "partners_text": "partners.text",
+  "contact_heading": "contact.heading",
+  "contact_subtext": "contact.subtext",
+  "contact_vorteil1_titel": "contact.benefit1_title",
+  "contact_vorteil1_text": "contact.benefit1_text",
+  "contact_vorteil2_titel": "contact.benefit2_title",
+  "contact_vorteil2_text": "contact.benefit2_text"
+}
