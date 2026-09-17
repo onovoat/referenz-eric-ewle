@@ -14,6 +14,14 @@
  *   ihren Container per `fill` ausfüllen; dort gibt es kein „darunter", ohne
  *   das Layout aufzubrechen. Bekommt einen eigenen dunklen Grund, weil der
  *   Kontrast sonst vom Bildmotiv abhängt und WCAG AA nicht zu halten wäre.
+ *   Nachgerechnet: Weiß auf 75 % Schwarz ergibt selbst über einem rein weißen
+ *   Motiv noch 10,4:1.
+ *
+ * Der Text ist mit 11 px klein und braucht daher 4,5:1. `--text-muted`
+ * (#8b95a1) liefert auf Weiß nur 3,04:1 und fällt damit aus, obwohl es die
+ * naheliegende Stufe für Nebentexte wäre. Verwendet wird `--text-secondary`
+ * (#4b5563): 7,56:1 auf Weiß und mindestens 7,07:1 auf allen hellen
+ * Flächentokens dieser Seite.
  */
 export default function KiHinweis({
   variante = 'unten',
@@ -36,7 +44,7 @@ export default function KiHinweis({
   return (
     <p
       data-ki-generiert="true"
-      className="mt-2 text-[0.6875rem] leading-tight text-[var(--text-muted)]"
+      className="mt-2 text-[0.6875rem] leading-tight text-[var(--text-secondary)]"
     >
       {text}
     </p>
