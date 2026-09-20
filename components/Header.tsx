@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link, usePathname } from '@/i18n/navigation';
 
 type Props = {
   locale: string;
@@ -11,6 +11,8 @@ type Props = {
 
 export default function Header({ locale }: Props) {
   const t = useTranslations('nav');
+  /* Pfad ohne Sprachpraefix, damit der Umschalter auf derselben Seite bleibt. */
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -33,8 +35,9 @@ export default function Header({ locale }: Props) {
 
   const LangSwitcher = ({ className }: { className?: string }) => (
     <Link
-      href={`/${otherLocale}`}
-      className={`flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--teal-700)] transition-colors px-2 py-1 rounded-lg ${className ?? ''}`}
+      href={pathname}
+      locale={otherLocale}
+      className={`flex min-h-[44px] items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--teal-700)] transition-colors px-2 rounded-lg ${className ?? ''}`}
       aria-label={`Sprache wechseln zu ${otherLabel}`}
     >
       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

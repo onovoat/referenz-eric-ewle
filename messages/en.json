@@ -7,7 +7,8 @@
     "contact": "Contact",
     "cta": "Get in touch",
     "slogan": "Connecting people. Creating success.",
-    "regions": "UA · Vienna · Salzburg"
+    "regions": "UA · Vienna · Salzburg",
+    "skip": "Skip to main content"
   },
   "hero": {
     "headline": "Connecting people.",
@@ -123,5 +124,9 @@
     "stats_text": "These cookies help us understand how visitors use the website.",
     "marketing_title": "Marketing Cookies",
     "marketing_text": "These cookies enable personalized advertising."
+  },
+  "legal": {
+    "zurueck": "Back to the homepage",
+    "nur_deutsch": "For legal reasons this page is only available in German."
   }
 }

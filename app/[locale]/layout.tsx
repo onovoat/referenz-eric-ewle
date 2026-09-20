@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import '../globals.css';
 import CookieBanner from '@/components/CookieBanner';
@@ -33,9 +33,12 @@ export async function generateMetadata({
   const path = isDe ? '/' : '/en';
   return {
     metadataBase: new URL(SITE_URL),
+    /* x-default zeigt auf die deutsche Fassung: Sie ist die Standardsprache,
+       und ohne diesen Eintrag ueberlaesst man Google die Wahl, welche Variante
+       es Nutzern ohne passende Spracheinstellung vorlegt. */
     alternates: {
       canonical: path,
-      languages: { de: '/', en: '/en' },
+      languages: { de: '/', en: '/en', 'x-default': '/' },
     },
     title: isDe
       ? 'Eric Ewle | IT Personalberatung & Recruiting in OÖ, Wien & Salzburg'
@@ -115,6 +118,7 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const t = await getTranslations('nav');
   /* Stammdaten fuer die strukturierten Daten und das Sticky-Widget. */
   const data = await getSiteData();
   const legal = await getLegalData();
@@ -133,7 +137,7 @@ export default async function LocaleLayout({
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-[var(--teal-800)] focus:rounded focus:shadow-lg focus:outline-none"
         >
-          Zum Hauptinhalt springen
+          {t('skip')}
         </a>
         <NextIntlClientProvider messages={messages}>
           {children}

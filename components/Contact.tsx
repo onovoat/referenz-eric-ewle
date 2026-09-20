@@ -6,6 +6,7 @@ import { inhalt } from '@/lib/inhalt';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Script from 'next/script';
+import { Link } from '@/i18n/navigation';
 
 declare global {
   interface Window {
@@ -96,8 +97,6 @@ export default function Contact({ data }: { data: SiteData }) {
   const inputClass =
     'w-full rounded-lg border border-[var(--border)] bg-[var(--stone-50)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--teal-700)] focus:border-transparent focus:bg-white transition-colors min-h-[44px]';
   const labelClass = 'block text-xs font-semibold text-[var(--text-secondary)] mb-1.5 tracking-wide';
-
-  const privacyHref = locale === 'de' ? '/datenschutz' : '/en/datenschutz';
 
   return (
     <>
@@ -318,9 +317,9 @@ export default function Contact({ data }: { data: SiteData }) {
                       />
                       <span className="text-xs text-[var(--text-secondary)] leading-relaxed group-hover:text-[var(--text-primary)] transition-colors">
                         {f('gdpr')}{' '}
-                        <a href={privacyHref} className="text-[var(--teal-700)] underline underline-offset-2 hover:text-[var(--teal-600)]">
+                        <Link href="/datenschutz" className="text-[var(--teal-700)] underline underline-offset-2 hover:text-[var(--teal-600)]">
                           {f('gdpr_link')}
-                        </a>
+                        </Link>
                         {' '}{f('gdpr_suffix')}
                       </span>
                     </label>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import Rechtsseite from '@/components/Rechtsseite';
 import { getLegalData } from '@/lib/directus';
 import { baueDatenschutz } from '@/lib/legal';
@@ -8,26 +7,35 @@ import { baueDatenschutz } from '@/lib/legal';
    Deploy sichtbar werden. */
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: 'Datenschutzerklärung',
-  description:
-    'Informationen zur Verarbeitung personenbezogener Daten auf der Website von Eric Ewle.',
-  alternates: { canonical: '/datenschutz' },
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Datenschutzerklärung',
+    description:
+      'Informationen zur Verarbeitung personenbezogener Daten auf der Website von Eric Ewle.',
+    alternates: { canonical: locale === 'en' ? '/en/datenschutz' : '/datenschutz' },
+    robots: { index: false, follow: true },
+  };
+}
 
+/* Siehe Impressum: keine Weiterleitung von der englischen Route, sonst
+   entsteht mit der Middleware eine endlose Schleife. */
 export default async function DatenschutzPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (locale === 'en') redirect('/datenschutz');
 
   return (
     <Rechtsseite
       titel="Datenschutzerklärung"
       ergebnis={baueDatenschutz(await getLegalData())}
+      nurDeutsch={locale === 'en'}
     />
   );
 }

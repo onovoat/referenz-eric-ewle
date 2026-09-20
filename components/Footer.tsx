@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import type { SiteData } from '@/lib/directus';
 import { telHref } from '@/lib/inhalt';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 type Props = {
 };

@@ -7,7 +7,8 @@
     "contact": "Kontakt",
     "cta": "Kontakt aufnehmen",
     "slogan": "Menschen verbinden. Erfolg gestalten.",
-    "regions": "OÖ · Wien · Salzburg"
+    "regions": "OÖ · Wien · Salzburg",
+    "skip": "Zum Hauptinhalt springen"
   },
   "hero": {
     "headline": "Menschen verbinden.",
@@ -123,5 +124,9 @@
     "stats_text": "Diese Cookies helfen uns zu verstehen, wie Besucher die Website nutzen.",
     "marketing_title": "Marketing-Cookies",
     "marketing_text": "Diese Cookies ermöglichen personalisierte Werbung."
+  },
+  "legal": {
+    "zurueck": "Zurück zur Startseite",
+    "nur_deutsch": "Diese Seite liegt aus rechtlichen Gründen nur auf Deutsch vor."
   }
 }

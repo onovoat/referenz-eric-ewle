@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import Rechtsseite from '@/components/Rechtsseite';
 import { getLegalData } from '@/lib/directus';
 import { baueImpressum } from '@/lib/legal';
@@ -11,14 +10,34 @@ export const revalidate = 60;
 
 /* Rechtsseiten gehören nie in den Suchindex: Sie enthalten ausschließlich
    Pflichtangaben und keine Inhalte, die jemand über Google suchen würde. */
-export const metadata: Metadata = {
-  title: 'Impressum',
-  description:
-    'Impressum und Offenlegung gemäß § 5 ECG und § 25 Mediengesetz für die Website von Eric Ewle.',
-  alternates: { canonical: '/impressum' },
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Impressum',
+    description:
+      'Impressum und Offenlegung gemäß § 5 ECG und § 25 Mediengesetz für die Website von Eric Ewle.',
+    alternates: { canonical: locale === 'en' ? '/en/impressum' : '/impressum' },
+    robots: { index: false, follow: true },
+  };
+}
 
+/**
+ * Die Rechtsvorlagen liegen nur auf Deutsch vor, weil die Pflichtangaben nach
+ * § 5 ECG und § 25 MedienG auf Deutsch gelten.
+ *
+ * Frueher leitete die englische Route deshalb auf "/impressum" um. Das war der
+ * Auslöser einer endlosen Weiterleitungsschleife: Die Middleware schickte
+ * "/impressum" wegen des gesetzten Sprach-Cookies zurueck auf "/en/impressum",
+ * diese Seite wieder auf "/impressum", und so fort. Im Browser kam dabei
+ * ERR_TOO_MANY_REDIRECTS oder eine weiße Seite heraus.
+ *
+ * Die englische Route liefert den deutschen Text jetzt direkt aus, mit einer
+ * Zeile darueber, die den Grund nennt. Keine Weiterleitung, keine Schleife.
+ */
 export default async function ImpressumPage({
   params,
 }: {
@@ -26,10 +45,11 @@ export default async function ImpressumPage({
 }) {
   const { locale } = await params;
 
-  /* Die Rechtsvorlagen liegen nur auf Deutsch vor. Eine englische Fassung
-     vorzugeben wäre irreführend, deshalb führt die englische Route auf die
-     deutsche Seite. */
-  if (locale === 'en') redirect('/impressum');
-
-  return <Rechtsseite titel="Impressum" ergebnis={baueImpressum(await getLegalData())} />;
+  return (
+    <Rechtsseite
+      titel="Impressum"
+      ergebnis={baueImpressum(await getLegalData())}
+      nurDeutsch={locale === 'en'}
+    />
+  );
 }
