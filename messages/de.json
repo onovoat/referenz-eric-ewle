@@ -98,7 +98,10 @@
       "submit": "Anfrage absenden",
       "sending": "Wird gesendet...",
       "success": "Vielen Dank! Ich melde mich in Kürze bei Ihnen.",
-      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "error_security": "Der Sicherheitscheck ist noch nicht abgeschlossen. Bitte warten Sie einen Moment und senden Sie erneut.",
+      "error_filetype": "Bitte laden Sie ein PDF hoch.",
+      "error_filesize": "Die Datei ist zu groß. Bitte senden Sie ein PDF mit maximal 5 MB."
     }
   },
   "footer": {

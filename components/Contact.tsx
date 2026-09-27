@@ -17,6 +17,9 @@ declare global {
   }
 }
 
+/* Gespiegelt aus app/api/contact/route.ts. Aenderungen dort auch hier nachziehen. */
+const ANHANG_MAX_BYTES = 5 * 1024 * 1024;
+
 export default function Contact({ data }: { data: SiteData }) {
   const t = useTranslations('contact');
   const f = useTranslations('contact.form');
@@ -42,8 +45,16 @@ export default function Contact({ data }: { data: SiteData }) {
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [token, setToken] = useState<string>('');
+  /* Turnstile wird erst bei der ersten Eingabe geladen. Sonst bekommt jeder
+     Seitenbesucher einen Token, den nie jemand verifiziert: Genau darueber
+     meldet Cloudflare "siteverify isn't being called". */
+  const [formAktiv, setFormAktiv] = useState(false);
+  const [dateiFehler, setDateiFehler] = useState<string>('');
+  const [fehlerSchluessel, setFehlerSchluessel] =
+    useState<'error' | 'error_security'>('error');
 
   useEffect(() => {
+    if (!formAktiv) return;
     const renderWidget = () => {
       if (window.turnstile && turnstileRef.current && !widgetIdRef.current) {
         widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
@@ -62,11 +73,17 @@ export default function Contact({ data }: { data: SiteData }) {
       window.addEventListener('turnstileLoaded', renderWidget, { once: true });
     }
     return () => window.removeEventListener('turnstileLoaded', renderWidget);
-  }, [locale]);
+  }, [formAktiv, locale]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.gdpr) return;
+    if (!token) {
+      setFehlerSchluessel('error_security');
+      setStatus('error');
+      return;
+    }
+    setFehlerSchluessel('error');
     setStatus('sending');
 
     const body = new FormData();
@@ -100,11 +117,13 @@ export default function Contact({ data }: { data: SiteData }) {
 
   return (
     <>
-      <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        onLoad={() => window.dispatchEvent(new Event('turnstileLoaded'))}
-        strategy="lazyOnload"
-      />
+      {formAktiv && (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          onLoad={() => window.dispatchEvent(new Event('turnstileLoaded'))}
+          strategy="afterInteractive"
+        />
+      )}
 
       <section id="contact" className="py-24 lg:py-32 bg-[var(--bg-alt)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -184,6 +203,8 @@ export default function Contact({ data }: { data: SiteData }) {
               ) : (
                 <form
                   onSubmit={handleSubmit}
+                  onFocusCapture={() => setFormAktiv(true)}
+                  onPointerDownCapture={() => setFormAktiv(true)}
                   className="bg-white rounded-2xl border border-[var(--border-light)] p-6 sm:p-8 shadow-sm shadow-black/5"
                   noValidate
                   aria-label={t('label')}
@@ -298,9 +319,37 @@ export default function Contact({ data }: { data: SiteData }) {
                         type="file"
                         accept=".pdf"
                         className="block w-full text-sm text-[var(--text-secondary)] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-[var(--border)] file:text-xs file:font-semibold file:bg-[var(--bg-alt)] file:text-[var(--text-secondary)] hover:file:bg-[var(--teal-50)] hover:file:border-[var(--teal-400)] file:transition-colors file:cursor-pointer cursor-pointer"
-                        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                        aria-describedby={dateiFehler ? 'attachment-fehler' : undefined}
+                        aria-invalid={dateiFehler ? true : undefined}
+                        onChange={(e) => {
+                          const gewaehlt = e.target.files?.[0] ?? null;
+                          if (!gewaehlt) {
+                            setFile(null);
+                            setDateiFehler('');
+                            return;
+                          }
+                          if (gewaehlt.type !== 'application/pdf') {
+                            setFile(null);
+                            setDateiFehler(f('error_filetype'));
+                            e.target.value = '';
+                            return;
+                          }
+                          if (gewaehlt.size > ANHANG_MAX_BYTES) {
+                            setFile(null);
+                            setDateiFehler(f('error_filesize'));
+                            e.target.value = '';
+                            return;
+                          }
+                          setFile(gewaehlt);
+                          setDateiFehler('');
+                        }}
                       />
                     </div>
+                    {dateiFehler && (
+                      <p id="attachment-fehler" role="alert" className="mt-2 text-xs text-red-600">
+                        {dateiFehler}
+                      </p>
+                    )}
                   </div>
 
                   <div ref={turnstileRef} className="mb-5" aria-label="Sicherheitscheck" />
@@ -326,7 +375,7 @@ export default function Contact({ data }: { data: SiteData }) {
                   </div>
 
                   {status === 'error' && (
-                    <p className="text-sm text-red-600 mb-4" role="alert">{f('error')}</p>
+                    <p className="text-sm text-red-600 mb-4" role="alert">{f(fehlerSchluessel)}</p>
                   )}
 
                   <button

@@ -98,7 +98,10 @@
       "submit": "Send inquiry",
       "sending": "Sending...",
       "success": "Thank you! I will be in touch shortly.",
-      "error": "An error occurred. Please try again."
+      "error": "An error occurred. Please try again.",
+      "error_security": "The security check has not finished yet. Please wait a moment and send again.",
+      "error_filetype": "Please upload a PDF file.",
+      "error_filesize": "This file is too large. Please send a PDF of no more than 5 MB."
     }
   },
   "footer": {
