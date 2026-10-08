@@ -24,6 +24,17 @@ export type LegalErgebnis =
 /** Einzeilige Anschrift aus strasse_hausnummer, plz und ort. */
 export function anschrift(d: KundenDatensatz): string;
 
+/**
+ * Ob die Rechtsform einer der in felder.json erlaubten Schlüssel ist.
+ *
+ * Ein unbekannter Wert schaltet sonst still alle Bedingungsblöcke ab und
+ * erzeugt ein Impressum, das vollständig aussieht und keines ist.
+ */
+export function rechtsformBekannt(
+  katalog: FeldKatalog,
+  rechtsform: unknown,
+): boolean;
+
 /** Welche Blöcke des Impressums gelten, abgeleitet aus Rechtsform und Feldern. */
 export function impressumBloecke(d: KundenDatensatz): {
   telefon: boolean;

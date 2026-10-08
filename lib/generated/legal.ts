@@ -1,9 +1,9 @@
 // Erzeugt von scripts/legal-sync.mjs, nicht von Hand aendern.
-// Quelle: onovo-legal v2026.9.1
+// Quelle: onovo-legal v2026.9.2
 // Wortlaut aendern: im Repo onovo-legal, danach hier `npm run legal:sync`.
 // Die Platzhalter werden zur Laufzeit aus Directus befuellt, siehe lib/legal.ts.
 
-export const legalVersion = "v2026.9.1";
+export const legalVersion = "v2026.9.2";
 
 export const felderKatalog = {
   "$schema": "https://onovo.at/schemas/legal-felder-1.json",
