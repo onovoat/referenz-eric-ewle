@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -103,6 +103,12 @@ function baueJsonLd(data: SiteData, legal: LegalData | null) {
     sameAs: [data.linkedin],
   };
 }
+
+// Nur ein Design: verbietet Browsern (Chrome-Auto-Dark, Samsung Internet,
+// In-App-Browser), die Seite im Dunkelmodus eigenmaechtig umzufaerben.
+export const viewport: Viewport = {
+  colorScheme: 'only light',
+};
 
 export default async function LocaleLayout({
   children,

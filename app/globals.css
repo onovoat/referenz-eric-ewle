@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  /* Nur ein Design, Browser duerfen es im Dunkelmodus nicht umfaerben. */
+  color-scheme: only light;
+
   /* Navy brand palette */
   --teal-900: #0d1b2e;
   --teal-800: #1a2c4e;
